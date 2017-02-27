@@ -1,5 +1,8 @@
 <template>
 <div id="app">
+  <div class="side-menu">
+
+  </div>
   <router-view></router-view>
 </div>
 
@@ -12,7 +15,6 @@ export default {
 
 </script>
 
-<style>
-
+<style lang="stylus">
 
 </style>
