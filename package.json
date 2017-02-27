@@ -1,8 +1,8 @@
 {
-  "name": "vue-cli-demo",
+  "name": "Dashboard",
   "version": "1.0.0",
-  "description": "demo",
-  "author": "张韧 <zhangr@ethicall.cn>",
+  "description": "数据分析及数据管理",
+  "author": "SimonZhang",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
