@@ -1,20 +1,82 @@
 <template>
 <div id="app">
   <div class="side-menu">
+    <el-col :span="8.5">
+      <h5 class="title">标题</h5>
+      <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark">
+        <el-menu-item index="1">Dashboard</el-menu-item>
+        <el-menu-item index="2">页面数据</el-menu-item>
+        <el-submenu index="3">
+          <template slot="title">业务数据
 
+</template>
+            <el-menu-item index="1-1">业务一</el-menu-item>
+            <el-menu-item index="1-2">业务二</el-menu-item>
+          </el-submenu>
+        </el-submenu>
+        <el-menu-item index="4">财务数据</el-menu-item>
+        <el-menu-item index="5">设置</el-menu-item>
+      </el-menu>
+    </el-col>
   </div>
-  <router-view></router-view>
+  <router-view class="router-view"></router-view>
 </div>
 
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+export default {}
 
 </script>
 
 <style lang="stylus">
-
+$border-color = rgba(255,255,255,0.1)
+$bg-color = #332E2E
+.side-menu
+  .title
+    font-size 26px
+    height 96px
+    line-height 96px
+    color rgb(193, 218, 134)
+    border-bottom 1px solid $border-color
+  .el-col
+    position fixed
+    top 0
+    bottom 0
+    left 0
+    width 265px
+    color #888888
+    background $bg-color
+    text-align center
+    .el-menu
+      background $bg-color
+      .el-menu-item
+        height auto
+        min-height 96px
+        line-height 96px
+        font-size 18px
+        border-bottom 1px solid $border-color
+        &:first-child
+          font-size 24px
+      .el-submenu
+        .el-submenu__title
+          height auto
+          min-height 96px
+          line-height 96px
+          font-size 18px
+          border-bottom 1px solid $border-color
+        .el-menu
+          background $bg-color
+          .el-menu-item
+            font-size 14px
+            min-height 50px
+            line-height 50px
+            padding-left 90px!important
+            border none
+            &:last-child
+              border-bottom 1px solid $border-color
+.router-view
+  position absolute
+  left 265px
+  width 100%
 </style>
