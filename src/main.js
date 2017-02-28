@@ -19,3 +19,5 @@ new Vue({
     App
   }
 })
+
+router.push('repeat')

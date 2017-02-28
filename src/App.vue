@@ -3,15 +3,15 @@
   <div class="side-menu">
     <el-col :span="8.5">
       <h5 class="title">标题</h5>
-      <el-menu default-active="2" class="el-menu-vertical-demo" theme="dark">
+      <el-menu default-active="repeat" class="el-menu-vertical-demo" theme="dark" :router="true">
         <el-menu-item index="1">Dashboard</el-menu-item>
         <el-menu-item index="2">页面数据</el-menu-item>
         <el-submenu index="3">
           <template slot="title">业务数据
 
 </template>
-            <el-menu-item index="1-1">业务一</el-menu-item>
-            <el-menu-item index="1-2">业务二</el-menu-item>
+            <el-menu-item index="repeat">业务一</el-menu-item>
+            <el-menu-item index="terminal">业务二</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="4">财务数据</el-menu-item>
@@ -78,5 +78,5 @@ $bg-color = #332E2E
 .router-view
   position absolute
   left 265px
-  width 100%
+  width calc(100% - 265px)
 </style>

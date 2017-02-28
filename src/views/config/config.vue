@@ -1,4 +1,3 @@
-// 业务数据
 <template lang="html">
 
 </template>

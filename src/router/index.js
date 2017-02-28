@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
+import repeat from 'views/business/repeat'
 
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'Hello',
-      component: Hello
-    }
-  ]
+  routes: [{
+    path: '/repeat',
+    name: 'repeat',
+    component: repeat
+  }]
 })
