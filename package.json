@@ -12,6 +12,7 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "element-ui": "^1.2.1",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.5.0",

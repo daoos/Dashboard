@@ -53,11 +53,19 @@
         </div>
       </div>
     </div>
+    <div class="table-wrapper">
+      <v-table></v-table>
+    </div>
   </div>
 </template>
 
 <script>
+import table from 'components/table/table'
+
 export default {
+  components: {
+    'v-table': table
+  },
   data() {
     return {
       startDate: '2016-10-01',
@@ -130,12 +138,11 @@ $subject-color = #10A0F7
         .el-icon-search
           font-size 20px
   .filters
-    opacity 0.8
-    padding-left 40px
     border-bottom 1px solid rgba(123,123,123,0.5)
     .conditions
       height 71px
       line-height 71px
+      padding-left 40px
       .title
         font-size 18px
         color $gray-color
@@ -156,6 +163,7 @@ $subject-color = #10A0F7
       line-height 76px
       font-size 18px
       color $gray-color
+      padding-left 40px
       .start , .end
         display inline-block
         .text
@@ -181,4 +189,6 @@ $subject-color = #10A0F7
           color black
           &:first-child
             padding-left 69px
+  .table-wrapper
+    text-align center
 </style>

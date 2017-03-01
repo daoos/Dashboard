@@ -32,6 +32,7 @@ export default {}
 <style lang="stylus">
 $border-color = rgba(255,255,255,0.1)
 $bg-color = #332E2E
+$content-width = calc(100% - 265px)
 .side-menu
   .title
     font-size 26px
@@ -78,5 +79,5 @@ $bg-color = #332E2E
 .router-view
   position absolute
   left 265px
-  width calc(100% - 265px)
+  width $content-width
 </style>
