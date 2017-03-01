@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-table :data="data&&data.length?data:tableData" border style="width: 100%" align="center">
+  <el-table :data="data&&data.length?data:tableData" border align="center">
       <el-table-column prop="date" label="日期" width="150">
       </el-table-column>
       <el-table-column label="基本信息" align="center">

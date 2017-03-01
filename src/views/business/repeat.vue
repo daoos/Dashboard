@@ -156,7 +156,7 @@ $subject-color = #10A0F7
         font-size 14px
         color $gray-color
     .dot-line
-      width 100%
+      width calc(100% - 10px)
       border 1px dashed #E6E6E6
     .times
       height 76px
