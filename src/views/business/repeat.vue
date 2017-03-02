@@ -1,26 +1,7 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-repeat">
-    <el-menu theme="dark" default-active="1" class="header-bar" mode="horizontal">
-      <el-menu-item index="1">概览</el-menu-item>
-      <el-menu-item index="2">分析</el-menu-item>
-      <div class="search">
-        <span class="text">搜索</span>
-        <div class="input-wrapper">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-caret-bottom el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>选择一</el-dropdown-item>
-              <el-dropdown-item>选择二</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <input type="text">
-          <i class="el-icon-search"></i>
-        </div>
-      </div>
-    </el-menu>
+    <v-header></v-header>
     <div class="filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
@@ -61,10 +42,12 @@
 
 <script>
 import table from 'components/table/table'
+import header from 'components/header/header'
 
 export default {
   components: {
-    'v-table': table
+    'v-table': table,
+    'v-header': header
   },
   data() {
     return {
@@ -100,43 +83,6 @@ export default {
 $gray-color = rgba(149, 149, 149, 0.8)
 $subject-color = #10A0F7
 .page-repeat
-  .header-bar
-    padding-left 78px
-    background $subject-color
-    .el-menu-item
-      height 96px
-      padding 0
-      margin 0 20px
-      line-height 96px
-      font-size 24px
-      color rgba(255, 255, 255, 0.6)
-      &.is-active
-        color white
-        border-bottom-color white
-      &:hover
-        border-bottom-color white
-        background transparent!important
-    .search
-      position absolute
-      right 77px
-      font-size 24px
-      line-height 96px
-      color white
-      .input-wrapper
-        display inline
-        height 40px
-        width 400px
-        padding 8px
-        margin-left 10px
-        background rgba(255,255,255,0.6)
-        border-radius 8px
-        .el-dropdown
-          cursor pointer
-        input
-          background none
-          border none
-        .el-icon-search
-          font-size 20px
   .filters
     border-bottom 1px solid rgba(123,123,123,0.5)
     .conditions
@@ -148,10 +94,10 @@ $subject-color = #10A0F7
         color $gray-color
       .item
         cursor pointer
-        padding-left 50px
+        margin-left 50px
         font-size 18px
         &:nth-child(2)
-          padding-left 35px
+          margin-left 35px
       .info
         font-size 14px
         color $gray-color
@@ -184,11 +130,14 @@ $subject-color = #10A0F7
         display inline-block
         .time
           cursor pointer
-          padding-left 55px
+          margin-left 55px
           font-size 18px
           color black
           &:first-child
-            padding-left 69px
+            margin-left 69px
   .table-wrapper
+    height 100%
     text-align center
+    padding-top 20px
+    background #f6f6f6
 </style>

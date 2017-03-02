@@ -19,7 +19,9 @@
       </el-menu>
     </el-col>
   </div>
-  <router-view class="router-view"></router-view>
+  <keep-alive>
+    <router-view class="router-view"></router-view>
+  </keep-alive>
 </div>
 
 </template>
@@ -80,4 +82,5 @@ $content-width = calc(100% - 265px)
   position absolute
   left 265px
   width $content-width
+  height calc(100% - 266px)
 </style>
