@@ -20,4 +20,4 @@ new Vue({
   }
 })
 
-router.push('repeat')
+router.push('/business/main')

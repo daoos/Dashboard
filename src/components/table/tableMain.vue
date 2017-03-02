@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="bi-table">
-    <el-table :data="data&&data.length?data:tableData" border align="center">
+    <el-table :data="data&&data.length?data:tableData" border align="center" width="1500">
         <el-table-column prop="date" label="日期" width="110" class-name="table-date-column" style="background:blue"></el-table-column>
         <el-table-column label="基本信息">
           <el-table-column prop="name" label="姓名" width="120"></el-table-column>
@@ -67,10 +67,13 @@ $subject-color = #10A0F7
     border none
     background #f6f6f6
     font-family STHeitiSC-Medium
-    td,th{
+    &::before
+      height 0
+    table
+      width 100%!important
+    td,th
       text-align center
       height 62px
-    }
     th[colspan="4"]
       background white
       .cell
@@ -82,6 +85,7 @@ $subject-color = #10A0F7
       .cell
         font-size 18px
         color #959595
+        background #EFEFEF
     th[rowspan="2"]
       background $subject-color
       .cell

@@ -3,15 +3,16 @@
   <div class="side-menu">
     <el-col :span="8.5">
       <h5 class="title">标题</h5>
-      <el-menu default-active="repeat" class="el-menu-vertical-demo" theme="dark" :router="true">
-        <el-menu-item index="1">Dashboard</el-menu-item>
+      <el-menu default-active="/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
+        <el-menu-item index="/1">Dashboard</el-menu-item>
         <el-menu-item index="2">页面数据</el-menu-item>
         <el-submenu index="3">
           <template slot="title">业务数据
 
 </template>
-            <el-menu-item index="repeat">业务一</el-menu-item>
-            <el-menu-item index="terminal">业务二</el-menu-item>
+          <el-menu-item index="/business/main">业务一</el-menu-item>
+          <el-menu-item index="/business/repeat">业务二</el-menu-item>
+          <el-menu-item index="/business/terminal">业务三</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="4">财务数据</el-menu-item>
@@ -82,5 +83,5 @@ $content-width = calc(100% - 265px)
   position absolute
   left 265px
   width $content-width
-  height calc(100% - 266px)
+  height 100%
 </style>

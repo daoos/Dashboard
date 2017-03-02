@@ -50,6 +50,7 @@ $subject-color = #10A0F7
     .search
       position absolute
       right 77px
+      font-family STHeitiSC-Medium
       font-size 24px
       line-height 96px
       color white
@@ -57,7 +58,7 @@ $subject-color = #10A0F7
         display inline
         height 40px
         width 400px
-        padding 8px
+        padding 7px
         margin-left 10px
         background rgba(255,255,255,0.6)
         border-radius 8px
@@ -68,4 +69,8 @@ $subject-color = #10A0F7
           border none
         .el-icon-search
           font-size 20px
+          width 20px
+          height 20px
+          margin-right 6px
+          color $subject-color
 </style>

@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import tableRepeat from 'components/table/tableRepeat'
+import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 
 export default {
   components: {
-    'v-table': tableRepeat,
+    'v-table': tableMain,
     'v-header': header,
     exportExcel
   },
