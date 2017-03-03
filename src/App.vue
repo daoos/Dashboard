@@ -21,7 +21,9 @@
     </el-col>
   </div>
   <keep-alive>
-    <router-view class="router-view"></router-view>
+    <transition name="router-fade" mode="out-in">
+  		<router-view class="router-view"></router-view>
+    </transition>
   </keep-alive>
 </div>
 
@@ -84,4 +86,10 @@ $content-width = calc(100% - 265px)
   left 265px
   width $content-width
   height 100%
+.router-fade-enter-active, .router-fade-leave-active {
+  	transition: all .2s
+}
+.router-fade-enter, .router-fade-leave-active {
+    opacity 0
+}
 </style>

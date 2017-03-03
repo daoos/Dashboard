@@ -6,7 +6,34 @@
 </template>
 
 <script>
-export default {}
+import CsvExport from '@/utils/CsvExport'
+
+export default {
+  methods: {
+    exportCsv(tableEl, tableData, fileName) {
+      let columns = this.getColumns(tableEl)
+      const fields = columns.map(t => t.prop)
+      const fieldNames = columns.map(t => t.label)
+      CsvExport(tableData, fields, fieldNames, fileName)
+    },
+    /**
+     * 针对多级分类表格，需循环遍历table获取columns
+     */
+    getColumns(tableEl, arr = []) {
+      if (!tableEl.$children.length) {
+        return
+      }
+      tableEl.$children.forEach((data) => {
+        if (!data.$children.length && data.prop) {
+          arr.push(data)
+        } else {
+          this.getColumns(data, arr)
+        }
+      })
+      return arr
+    }
+  }
+}
 
 </script>
 

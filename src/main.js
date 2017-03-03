@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import router from './router/router'
 import vuex from './vuex'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
@@ -19,5 +19,3 @@ new Vue({
     App
   }
 })
-
-router.push('/business/main')

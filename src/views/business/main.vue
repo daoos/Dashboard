@@ -33,12 +33,12 @@
           <span class="time" v-for="time in times_filter">{{time.name}}</span>
         </div>
       </div>
-      <div class="export-wrapper">
-        <exportExcel></exportExcel>
+      <div class="export-wrapper" @click="exportData()">
+        <exportExcel ref="exportExcel"></exportExcel>
       </div>
     </div>
     <div class="table-wrapper">
-      <v-table></v-table>
+      <v-table ref="table"></v-table>
     </div>
   </div>
 </template>
@@ -47,6 +47,7 @@
 import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import axios from 'axios'
 
 export default {
   components: {
@@ -54,8 +55,12 @@ export default {
     'v-header': header,
     exportExcel
   },
+  created() {
+    this._init()
+  },
   data() {
     return {
+      tableData: {},
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       conditions: [{
@@ -78,6 +83,16 @@ export default {
       }, {
         name: '年报'
       }]
+    }
+  },
+  methods: {
+    exportData() {
+      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '信使拜访数据汇总')
+    },
+    _init() {
+      axios.get('static/data/tableData.json').then((res) => {
+        this.tableData = res.data
+      })
     }
   }
 }

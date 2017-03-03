@@ -8,16 +8,16 @@ Vue.use(Router)
 
 export default new Router({
   routes: [{
+    path: '',
+    redirect: '/business/main'
+  }, {
     path: '/business/main',
-    name: 'businessMain',
     component: businessMain
   }, {
     path: '/business/repeat',
-    name: 'businessRepeat',
     component: businessRepeat
   }, {
     path: '/business/terminal',
-    name: 'businessTerminal',
     component: businessTerminal
   }]
 })

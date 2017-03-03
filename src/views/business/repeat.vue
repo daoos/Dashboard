@@ -59,15 +59,11 @@ export default {
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       conditions: [{
-        name: '信使'
-      }, {
         name: 'SKU'
       }, {
         name: '省份'
       }, {
         name: '城市'
-      }, {
-        name: '终端'
       }],
       times_filter: [{
         name: '分析周期'
