@@ -26,6 +26,7 @@ module.exports = {
       'components': path.resolve(__dirname, '../src/components'),
       'views': path.resolve(__dirname, '../src/views'),
       'common': path.resolve(__dirname, '../src/common'),
+      'service': path.resolve(__dirname, '../src/service'),
       'img': path.resolve(__dirname, '../resource/img')
     }
   },

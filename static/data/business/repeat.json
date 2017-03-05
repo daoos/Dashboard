@@ -1,0 +1,56 @@
+{
+  "took": 10,
+  "timed_out": false,
+  "_shards": {
+    "total": 5,
+    "successful": 5,
+    "failed": 0
+  },
+  "hits": {
+    "total": 133,
+    "max_score": 1,
+    "hits": [{
+      "_index": "ethicall_data_sales_flow_month_repeat_aggs-tmp",
+      "_type": "aggeration_data",
+      "_id": "AVqba3NHKspVqwx1YK8g",
+      "_score": 1,
+      "_source": {
+        "last_month_task_available_hospital": 0,
+        "product": "倍他乐克",
+        "last_month_task_assign_hospital": 0,
+        "state_id_name": "江苏省",
+        "city_id_name": "扬州市",
+        "sales_month": "2017-01",
+        "last_month_sales_hospital": 0
+      }
+    }, {
+      "_index": "ethicall_data_sales_flow_month_repeat_aggs-tmp",
+      "_type": "aggeration_data",
+      "_id": "AVqba3QTKspVqwx1YK8m",
+      "_score": 1,
+      "_source": {
+        "last_month_task_available_hospital": 0,
+        "product": "倍他乐克",
+        "last_month_task_assign_hospital": 0,
+        "state_id_name": "江西省",
+        "city_id_name": "上饶市",
+        "sales_month": "2017-01",
+        "last_month_sales_hospital": 0
+      }
+    }, {
+      "_index": "ethicall_data_sales_flow_month_repeat_aggs-tmp",
+      "_type": "aggeration_data",
+      "_id": "AVqba3RVKspVqwx1YK8n",
+      "_score": 1,
+      "_source": {
+        "last_month_task_available_hospital": 0,
+        "product": "倍他乐克",
+        "last_month_task_assign_hospital": 0,
+        "state_id_name": "江西省",
+        "city_id_name": "九江市",
+        "sales_month": "2017-01",
+        "last_month_sales_hospital": 0
+      }
+    }]
+  }
+}

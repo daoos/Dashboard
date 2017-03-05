@@ -48,6 +48,9 @@ import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import axios from 'axios'
+import {
+  bisMain
+} from 'service/getData'
 
 export default {
   components: {
@@ -55,7 +58,10 @@ export default {
     'v-header': header,
     exportExcel
   },
-  created() {
+  mounted() {
+    bisMain().then((res) => {
+      console.log(res.data);
+    })
     this._init()
   },
   data() {

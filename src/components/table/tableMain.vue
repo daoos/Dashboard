@@ -3,28 +3,24 @@
     <el-table :data="data&&data.length?data:tableData" border align="center" width="1500">
         <el-table-column prop="date" label="日期" width="110" class-name="table-date-column" style="background:blue"></el-table-column>
         <el-table-column label="基本信息">
-          <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+          <el-table-column prop="name" label="SKU" width="120"></el-table-column>
           <el-table-column prop="province" label="省份" width="120"></el-table-column>
-          <el-table-column prop="city" label="市区" width="120"></el-table-column>
-          <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+          <el-table-column prop="city" label="城市" width="120"></el-table-column>
+          <el-table-column prop="zip" label="终端" width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="用户信息">
-          <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-          <el-table-column prop="province" label="省份" width="120"></el-table-column>
-          <el-table-column prop="city" label="市区" width="120"></el-table-column>
-          <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+          <el-table-column prop="name" label="负责信使" width="120"></el-table-column>
+          <el-table-column prop="province" label="累计关注医生" width="150"></el-table-column>
+          <el-table-column prop="city" label="关注医生" width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="实际拜访数据">
-          <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-          <el-table-column prop="province" label="省份" width="120"></el-table-column>
-          <el-table-column prop="city" label="市区" width="120"></el-table-column>
-          <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+          <el-table-column prop="name" label="拜访次数" width="120"></el-table-column>
+          <el-table-column prop="province" label="阅读次数" width="120"></el-table-column>
+          <el-table-column prop="city" label="反馈次数" width="120"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
-          <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-          <el-table-column prop="province" label="省份" width="120"></el-table-column>
-          <el-table-column prop="city" label="市区" width="120"></el-table-column>
-          <el-table-column prop="zip" label="邮编" width="120"></el-table-column>
+          <el-table-column prop="name" label="销售数量" width="120"></el-table-column>
+          <el-table-column prop="province" label="销售额" width="120"></el-table-column>
         </el-table-column>
       </el-table>
   </div>
@@ -74,7 +70,7 @@ $subject-color = #10A0F7
     td,th
       text-align center
       height 62px
-    th[colspan="4"]
+    th[colspan="4"],th[colspan="3"],th[colspan="2"]
       background white
       .cell
         font-size 21px
