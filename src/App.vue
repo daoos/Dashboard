@@ -10,9 +10,9 @@
           <template slot="title">业务数据
 
 </template>
-          <el-menu-item index="/business/main">业务一</el-menu-item>
-          <el-menu-item index="/business/repeat">业务二</el-menu-item>
-          <el-menu-item index="/business/terminal">业务三</el-menu-item>
+          <el-menu-item index="/business/main">信使拜访数据汇总</el-menu-item>
+          <el-menu-item index="/business/terminal">区域终端购进汇总</el-menu-item>
+          <el-menu-item index="/business/repeat">区域重复购进汇总</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="4">财务数据</el-menu-item>

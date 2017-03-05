@@ -1,6 +1,6 @@
 import json2csv from 'json2csv'
 
-export default function(data, fields, fieldNames, fileName) {
+export default (data, fields, fieldNames, fileName) => {
   try {
     var result = json2csv({
       data: data,

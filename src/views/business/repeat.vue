@@ -1,6 +1,6 @@
 // 区域重复购进汇总
 <template lang="html">
-  <div class="page-businessMain">
+  <div class="page-businessRepeat">
     <v-header></v-header>
     <div class="filters">
       <div class="conditions">
@@ -29,8 +29,19 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-        <div class="time-wrapper">
-          <span class="time" v-for="time in times_filter">{{time.name}}</span>
+      </div>
+      <div class="repeats">
+        <div class="rep">
+          <span>重复购进</span>
+          <el-select placeholder="请选择">
+            <el-option></el-option>
+          </el-select>
+        </div>
+        <div class="month">
+          <span>个月购进</span>
+          <el-select placeholder="请选择">
+            <el-option></el-option>
+          </el-select>
         </div>
       </div>
       <div class="export-wrapper">
@@ -64,15 +75,6 @@ export default {
         name: '省份'
       }, {
         name: '城市'
-      }],
-      times_filter: [{
-        name: '分析周期'
-      }, {
-        name: '日报'
-      }, {
-        name: '周报'
-      }, {
-        name: '年报'
       }]
     }
   }
@@ -83,7 +85,7 @@ export default {
 <style lang="stylus">
 $gray-color = rgba(149, 149, 149, 0.8)
 $subject-color = #10A0F7
-.page-businessMain
+.page-businessRepeat
   background #f6f6f6
   .filters
     position relative
