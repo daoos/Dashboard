@@ -93,6 +93,7 @@ $subject-color = #10A0F7
     margin 20px 80px 0
     background white
     .conditions
+      display inline-block
       height 71px
       line-height 71px
       padding-left 40px
@@ -112,6 +113,7 @@ $subject-color = #10A0F7
       width calc(100% - 143px)
       border 1px dashed #E6E6E6
     .times
+      display inline-block
       height 76px
       line-height 76px
       font-size 18px
@@ -142,6 +144,16 @@ $subject-color = #10A0F7
           color black
           &:first-child
             margin-left 69px
+    .repeats
+      display inline-block
+      padding-left 50px
+      .rep,.month
+        display inline-block
+        .el-select
+          width 103px
+          padding-left 9px
+      .month
+        padding-left 8px
     .export-wrapper
       position absolute
       top 48px
