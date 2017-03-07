@@ -34,22 +34,30 @@
         <div class="rep">
           <span>重复购进</span>
           <el-select placeholder="请选择">
-            <el-option></el-option>
+            <el-option
+              v-for="item in options"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
           </el-select>
         </div>
         <div class="month">
           <span>个月购进</span>
           <el-select placeholder="请选择">
-            <el-option></el-option>
+            <el-option
+              v-for="item in options"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
           </el-select>
         </div>
       </div>
-      <div class="export-wrapper">
-        <exportExcel></exportExcel>
+      <div class="export-wrapper" @click="exportData">
+        <exportExcel ref="exportExcel"></exportExcel>
       </div>
     </div>
     <div class="table-wrapper">
-      <v-table></v-table>
+      <v-table :data="tableData" ref="table"></v-table>
     </div>
   </div>
 </template>
@@ -58,6 +66,9 @@
 import tableRepeat from 'components/table/tableRepeat'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import {
+  bisRepeat
+} from 'service/getData'
 
 export default {
   components: {
@@ -65,17 +76,48 @@ export default {
     'v-header': header,
     exportExcel
   },
+  created() {
+    this._init()
+  },
   data() {
     return {
+      tableData: [],
       startDate: '2016-10-01',
       endDate: '2017-03-01',
+      monthValue: '',
       conditions: [{
         name: 'SKU'
       }, {
         name: '省份'
       }, {
         name: '城市'
+      }],
+      options: [{
+        value: '选项1',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
       }]
+    }
+  },
+  methods: {
+    _init() {
+      bisRepeat().then((res) => {
+        this.tableData = res.data.hits.hits
+      })
+    },
+    exportData() {
+      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '区域重复购进汇总')
     }
   }
 }

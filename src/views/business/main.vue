@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <v-table ref="table"></v-table>
+      <v-table ref="table" :data="tableData"></v-table>
     </div>
   </div>
 </template>
@@ -47,7 +47,6 @@
 import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
-import axios from 'axios'
 import {
   bisMain
 } from 'service/getData'
@@ -58,15 +57,12 @@ export default {
     'v-header': header,
     exportExcel
   },
-  mounted() {
-    bisMain().then((res) => {
-      console.log(res.data);
-    })
+  created() {
     this._init()
   },
   data() {
     return {
-      tableData: {},
+      tableData: [],
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       conditions: [{
@@ -96,8 +92,8 @@ export default {
       this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '信使拜访数据汇总')
     },
     _init() {
-      axios.get('static/data/tableData.json').then((res) => {
-        this.tableData = res.data
+      bisMain().then((res) => {
+        this.tableData = res.data.hits.hits
       })
     }
   }

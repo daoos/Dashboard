@@ -1,4 +1,4 @@
-// 区域重复购进汇总
+// 区域终端购进汇总
 <template lang="html">
   <div class="page-businessTerminal">
     <v-header></v-header>
@@ -30,12 +30,12 @@
           </el-date-picker>
         </div>
       </div>
-      <div class="export-wrapper">
-        <exportExcel></exportExcel>
+      <div class="export-wrapper" @click="exportData()">
+        <exportExcel ref="exportExcel"></exportExcel>
       </div>
     </div>
     <div class="table-wrapper">
-      <v-table></v-table>
+      <v-table :data="tableData" ref="table"></v-table>
     </div>
   </div>
 </template>
@@ -44,6 +44,9 @@
 import tableTerminal from 'components/table/tableTerminal'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import {
+  bisTerminal
+} from 'service/getData'
 
 export default {
   components: {
@@ -51,8 +54,12 @@ export default {
     'v-header': header,
     exportExcel
   },
+  created() {
+    this._init()
+  },
   data() {
     return {
+      tableData: [],
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       conditions: [{
@@ -62,6 +69,16 @@ export default {
       }, {
         name: '城市'
       }]
+    }
+  },
+  methods: {
+    _init() {
+      bisTerminal().then((res) => {
+        this.tableData = res.data.hits.hits
+      })
+    },
+    exportData() {
+      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '区域终端购进汇总')
     }
   }
 }
