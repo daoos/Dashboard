@@ -49,6 +49,326 @@
         "read_material_sum": 0,
         "sales_amount_sum": 1752
       }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    },{
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMU28KspVqwx1YJLm",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 0,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 5,
+        "current_date": "2016-10-27",
+        "messenger": " 邹建华",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
+    }, {
+      "_index": "ethicall-messenger_task_visit_info_aggs",
+      "_type": "aggeration_data",
+      "_id": "AVqZMUysKspVqwx1YJLl",
+      "_score": 1,
+      "_source": {
+        "product": "维格列汀",
+        "sales_count_sum": 240,
+        "city_id_name": "太原市",
+        "visit_count_sum": 1,
+        "state_id_name": "山西省",
+        "doctor_evaluate_sum": 1,
+        "hospital": "山西省人民医院",
+        "doc_count": 5,
+        "count_total": 10,
+        "current_date": "2016-10-27",
+        "messenger": "侯侯",
+        "read_material_sum": 0,
+        "sales_amount_sum": 1752
+      }
     }]
   }
 }
