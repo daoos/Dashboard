@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="bi-table-repeat bi-table">
-    <el-table :data="data" border align="center" width="1500">
+    <el-table :data="tableData" border align="center" width="1500">
       <el-table-column prop="_source.sales_month" label="时间" width="120" class-name="table-date-column" style="background:blue"></el-table-column>
       <el-table-column prop="_source.product" label="产品" width="120"></el-table-column>
       <el-table-column prop="_source.state_id_name" label="省份" width="120"></el-table-column>
