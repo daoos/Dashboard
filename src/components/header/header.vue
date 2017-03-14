@@ -15,7 +15,7 @@
               <el-dropdown-item>选择二</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
-          <input type="text">
+          <input type="text" v-model="searchInput" v-on:input="onInput(searchInput)">
           <i class="el-icon-search"></i>
         </div>
       </div>
@@ -24,7 +24,24 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: {
+    tableData: [Array]
+  },
+  created() {
+    console.log(this.tableData);
+  },
+  data() {
+    return {
+      searchInput: ''
+    }
+  },
+  methods: {
+    onInput(val) {
+      console.log(this.$parent)
+    }
+  }
+}
 
 </script>
 
@@ -32,14 +49,14 @@ export default {}
 $subject-color = #10A0F7
 .bi-header
   .header-bar
-    padding-left 78px
+    padding-left 38px
     background $subject-color
     .el-menu-item
-      height 96px
+      height 70px
       padding 0
       margin 0 20px
-      line-height 96px
-      font-size 24px
+      line-height 70px
+      font-size 21px
       color rgba(255, 255, 255, 0.6)
       &.is-active
         color white
@@ -51,8 +68,8 @@ $subject-color = #10A0F7
       position absolute
       right 77px
       font-family STHeitiSC-Medium
-      font-size 24px
-      line-height 96px
+      font-size 21px
+      line-height 70px
       color white
       .input-wrapper
         display inline
@@ -65,8 +82,15 @@ $subject-color = #10A0F7
         .el-dropdown
           cursor pointer
         input
+          position relative
+          top -3px
+          font-size 16px
+          width 240px
+          height 18px
           background none
           border none
+          appearance none
+          outline 0
         .el-icon-search
           font-size 20px
           width 20px

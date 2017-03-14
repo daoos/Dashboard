@@ -37,7 +37,8 @@ export default {}
 <style lang="stylus">
 $border-color = rgba(255,255,255,0.1)
 $bg-color = #332E2E
-$content-width = calc(100% - 265px)
+$side-menu-width = 200px
+$content-width = calc(100% - 200px)
 .side-menu
   .title
     font-size 26px
@@ -50,7 +51,7 @@ $content-width = calc(100% - 265px)
     top 0
     bottom 0
     left 0
-    width 265px
+    width $side-menu-width
     color #888888
     background $bg-color
     text-align center
@@ -77,13 +78,13 @@ $content-width = calc(100% - 265px)
             font-size 14px
             min-height 50px
             line-height 50px
-            padding-left 90px!important
+            padding-left 65px!important
             border none
             &:last-child
               border-bottom 1px solid $border-color
 .router-view
   position absolute
-  left 265px
+  left $side-menu-width
   width $content-width
   height 100%
 .router-fade-enter-active, .router-fade-leave-active {

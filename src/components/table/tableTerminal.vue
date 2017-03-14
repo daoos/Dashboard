@@ -65,13 +65,10 @@ export default {
 </script>
 
 <style lang="stylus">
-$th-color = #EFEFEF
+@import '../../style/variable'
 // 重写样式
 .bi-table-repeat
   .el-table
-    td,th
-      text-align center
-      height 100px
     th.table-date-column
       background $th-color
       .cell

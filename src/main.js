@@ -4,8 +4,10 @@ import router from './router/router'
 import vuex from './vuex'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
+import DataTables from 'vue-data-tables'
 
 Vue.use(ElementUI)
+Vue.use(DataTables)
 
 Vue.config.productionTip = false
 

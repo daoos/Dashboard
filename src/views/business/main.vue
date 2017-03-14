@@ -1,8 +1,8 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-businessMain">
-    <v-header></v-header>
-    <div class="filters">
+    <v-header :tableData="tableData"></v-header>
+    <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
         <span class="item" v-for="item in conditions">{{item.name}}</span>
@@ -38,7 +38,29 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <v-table ref="table" :data="tableData"></v-table>
+      <data-tables :data='tableData' :search-def='{show:false}' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+        <el-table-column prop="_source.current_date" label="日期" width="100" class-name="table-date-column" style="background:blue"></el-table-column>
+        <el-table-column label="基本信息">
+          <el-table-column prop="_source.product" label="SKU" min-width="100"></el-table-column>
+          <el-table-column prop="_source.state_id_name" label="省份"></el-table-column>
+          <el-table-column prop="_source.city_id_name" label="城市"></el-table-column>
+          <el-table-column prop="_source.hospital" label="终端" min-width="140"></el-table-column>
+        </el-table-column>
+        <el-table-column label="用户信息">
+          <el-table-column prop="_source.messenger" label="负责信使"></el-table-column>
+          <el-table-column prop="_source.total_count" label="累计关注医生"></el-table-column>
+          <el-table-column prop="_source.doc_count" label="关注医生"></el-table-column>
+        </el-table-column>
+        <el-table-column label="实际拜访数据">
+          <el-table-column prop="_source.visit_count_sum" label="拜访次数"></el-table-column>
+          <el-table-column prop="_source.read_material_sum" label="阅读次数"></el-table-column>
+          <el-table-column prop="_source.doctor_evaluate_sum" label="反馈次数"></el-table-column>
+        </el-table-column>
+        <el-table-column label="实际销售数据">
+          <el-table-column prop="_source.sales_count_sum" label="销售数量"></el-table-column>
+          <el-table-column prop="_source.sales_amount_sum" label="销售额"></el-table-column>
+        </el-table-column>
+      </data-tables>
     </div>
   </div>
 </template>
@@ -47,6 +69,7 @@
 import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import vuex from 'vuex'
 import {
   bisMain
 } from 'service/getData'
@@ -102,71 +125,10 @@ export default {
 </script>
 
 <style lang="stylus">
-$gray-color = rgba(149, 149, 149, 0.8)
-$subject-color = #10A0F7
+@import '../../style'
+
 .page-businessMain
+  position absolute
   background #f6f6f6
-  .filters
-    position relative
-    border-bottom 1px solid rgba(123,123,123,0.5)
-    margin 20px 80px 0
-    background white
-    .conditions
-      height 71px
-      line-height 71px
-      padding-left 40px
-      .title
-        font-size 18px
-        color $gray-color
-      .item
-        cursor pointer
-        margin-left 50px
-        font-size 18px
-        &:nth-child(2)
-          margin-left 35px
-      .info
-        font-size 14px
-        color $gray-color
-    .dot-line
-      width calc(100% - 143px)
-      border 1px dashed #E6E6E6
-    .times
-      height 76px
-      line-height 76px
-      font-size 18px
-      color $gray-color
-      padding-left 40px
-      .start , .end
-        display inline-block
-        .text
-          color rgba(0, 0, 0, 0.69)
-        .el-date-editor
-          width 147px
-          .el-icon-date
-            color $subject-color
-          input
-            background rgba(245,245,245,0.60)
-            border 1px solid #D3D3D3
-            border-radius 8px
-      .start
-        padding-left 35px
-      .end
-        padding-left 57px
-      .time-wrapper
-        display inline-block
-        .time
-          cursor pointer
-          margin-left 55px
-          font-size 18px
-          color black
-          &:first-child
-            margin-left 69px
-    .export-wrapper
-      position absolute
-      top 48px
-      right 28px
-  .table-wrapper
-    height calc(100% - 286px)
-    text-align center
-    padding 20px 80px 0
+
 </style>
