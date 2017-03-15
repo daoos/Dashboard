@@ -5,7 +5,9 @@
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in conditions">{{item.name}}</span>
+        <div class="bi-checkbox-wrapper">
+          <bi-checkbox-group :items="conditions.slice()"></bi-checkbox-group>
+        </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -78,6 +80,7 @@
 import tableRepeat from 'components/table/tableRepeat'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import BiCheckboxGroup from 'components/checkbox-group'
 import {
   bisRepeat
 } from 'service/getData'
@@ -86,7 +89,8 @@ export default {
   components: {
     'v-table': tableRepeat,
     'v-header': header,
-    exportExcel
+    exportExcel,
+    BiCheckboxGroup
   },
   created() {
     this.$root.$on('selectChange', v => {
@@ -134,8 +138,13 @@ export default {
       bisRepeat().then((res) => {
         let arr = res.data.hits.hits
         let tempArr = []
+        let props = ['sales_month', 'product', 'state_id_name', 'city_id_name', 'last_month_task_available_hospital', 'last_month_task_assign_hospital', 'last_month_sales_hospital']
         arr.forEach((t) => {
-          tempArr.push(t._source)
+          let obj = {}
+          props.forEach(k => {
+            obj[k] = t._source[k]
+          })
+          tempArr.push(obj)
         })
         this.tableData = tempArr
       })

@@ -40,6 +40,7 @@ export default {
       this.$root.$emit('selectChange', val)
     },
     onInput(val) {
+      window.x = this.$parent.$refs.table
       Vue.set(this.$parent.$refs.table, 'searchKey', this.searchInput)
     }
   }

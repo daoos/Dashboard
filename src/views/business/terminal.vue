@@ -5,7 +5,9 @@
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in options">{{item.name}}</span>
+        <div class="bi-checkbox-wrapper">
+          <bi-checkbox-group :items="options.slice()"></bi-checkbox-group>
+        </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -42,7 +44,7 @@
       :has-action-col="false"
       :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
         <el-table-column prop="sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
-        <el-table-column prop="product" label="产品"></el-table-column>
+        <el-table-column prop="product" label="SKU"></el-table-column>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>
         <el-table-column prop="city_id_name" label="城市"></el-table-column>
         <el-table-column prop="hospital_available_count" label="购进信使负责终端数"></el-table-column>
@@ -57,6 +59,7 @@
 import tableTerminal from 'components/table/tableTerminal'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import BiCheckboxGroup from 'components/checkbox-group'
 import {
   bisTerminal
 } from 'service/getData'
@@ -65,7 +68,8 @@ export default {
   components: {
     'v-table': tableTerminal,
     'v-header': header,
-    exportExcel
+    exportExcel,
+    BiCheckboxGroup
   },
   created() {
     this.$root.$on('selectChange', v => {
@@ -96,8 +100,13 @@ export default {
       bisTerminal().then((res) => {
         let arr = res.data.hits.hits
         let tempArr = []
+        let props = ['sales_month', 'product', 'state_id_name', 'city_id_name', 'hospital_available_count', 'hospital_assign_count', 'hospital_count']
         arr.forEach((t) => {
-          tempArr.push(t._source)
+          let obj = {}
+          props.forEach(k => {
+            obj[k] = t._source[k]
+          })
+          tempArr.push(obj)
         })
         this.tableData = tempArr
       })

@@ -20,11 +20,11 @@
       </el-menu>
     </el-col>
   </div>
-  <keep-alive>
-    <transition name="router-fade" mode="out-in">
-  		<router-view class="router-view"></router-view>
-    </transition>
-  </keep-alive>
+  <transition name="router-fade" mode="out-in">
+    <keep-alive>
+    	<router-view class="router-view"></router-view>
+    </keep-alive>
+  </transition>
 </div>
 
 </template>

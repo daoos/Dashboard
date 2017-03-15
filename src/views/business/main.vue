@@ -5,7 +5,9 @@
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in options.slice()" @click="item.selected=true">{{item.name}}</span>
+        <div class="bi-checkbox-wrapper">
+          <bi-checkbox-group :items="options.slice()"></bi-checkbox-group>
+        </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -30,7 +32,7 @@
           </el-date-picker>
         </div>
         <div class="time-wrapper">
-          <span class="time" v-for="time in times_filter">{{time.name}}</span>
+          <bi-checkbox-group :items="times_filter"></bi-checkbox-group>
         </div>
       </div>
       <div class="export-wrapper" @click="exportData()">
@@ -76,6 +78,7 @@
 import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
+import BiCheckboxGroup from 'components/checkbox-group'
 import {
   bisMain
 } from 'service/getData'
@@ -84,7 +87,8 @@ export default {
   components: {
     'v-table': tableMain,
     'v-header': header,
-    exportExcel
+    exportExcel,
+    BiCheckboxGroup
   },
   created() {
     this.$root.$on('selectChange', v => {
@@ -114,8 +118,13 @@ export default {
       bisMain().then((res) => {
         let arr = res.data.hits.hits
         let tempArr = []
+        let props = ['current_date', 'product', 'state_id_name', 'city_id_name', 'hospital', 'messenger', 'total_count', 'doc_count', 'visit_count_sum', 'read_material_sum', 'doctor_evaluate_sum', 'sales_count_sum', 'sales_amount_sum']
         arr.forEach((t) => {
-          tempArr.push(t._source)
+          let obj = {}
+          props.forEach(k => {
+            obj[k] = t._source[k]
+          })
+          tempArr.push(obj)
         })
         this.tableData = tempArr
       })
