@@ -1,11 +1,11 @@
 // 区域终端购进汇总
 <template lang="html">
   <div class="page-businessTerminal">
-    <v-header></v-header>
+    <v-header :options='options'></v-header>
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in conditions">{{item.name}}</span>
+        <span class="item" v-for="item in options">{{item.name}}</span>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -35,7 +35,12 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <data-tables :data='tableData' :search-def='{show:false}' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+      <data-tables
+      ref='table'
+      :data='tableData'
+      :search-def='{props:searchProp}'
+      :has-action-col="false"
+      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
         <el-table-column prop="sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
         <el-table-column prop="product" label="产品"></el-table-column>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>
@@ -63,6 +68,9 @@ export default {
     exportExcel
   },
   created() {
+    this.$root.$on('selectChange', v => {
+      this.searchProp = v
+    })
     this._init()
   },
   data() {
@@ -70,12 +78,16 @@ export default {
       tableData: [],
       startDate: '2016-10-01',
       endDate: '2017-03-01',
-      conditions: [{
-        name: 'SKU'
+      searchProp: '',
+      options: [{
+        name: 'SKU',
+        code: 'product'
       }, {
-        name: '省份'
+        name: '省份',
+        code: 'state_id_name'
       }, {
-        name: '城市'
+        name: '城市',
+        code: 'city_id_name'
       }]
     }
   },
@@ -91,7 +103,8 @@ export default {
       })
     },
     exportData() {
-      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '区域终端购进汇总')
+      let table = this.$refs.table
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '区域终端购进汇总')
     }
   }
 }

@@ -1,11 +1,11 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-businessMain">
-    <v-header :tableData="tableData"></v-header>
+    <v-header :tableData="tableData" :options="options"></v-header>
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in conditions" @click="item.selected=true">{{item.name}}</span>
+        <span class="item" v-for="item in options.slice()" @click="item.selected=true">{{item.name}}</span>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -38,7 +38,13 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <data-tables v-if="!showGroup" ref="table" :data='tableData' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+      <data-tables
+      v-if="!showGroup"
+      ref="table"
+      :data='tableData'
+      :has-action-col="false"
+      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
+      :search-def='{props:searchProp}'>
         <el-table-column prop="current_date" label="日期" width="100"></el-table-column>
         <el-table-column label="基本信息">
           <el-table-column prop="product" label="SKU" min-width="100"></el-table-column>
@@ -81,6 +87,9 @@ export default {
     exportExcel
   },
   created() {
+    this.$root.$on('selectChange', v => {
+      this.searchProp = v
+    })
     window.x = this
     this._init()
   },
@@ -90,8 +99,16 @@ export default {
     }
   },
   methods: {
+    getProps() {
+      let arr = []
+      this.options.forEach(t => {
+        arr.push(t.code)
+      })
+      return arr
+    },
     exportData() {
-      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '信使拜访数据汇总')
+      let table = this.$refs.table
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '信使拜访数据汇总')
     },
     _init() {
       bisMain().then((res) => {
@@ -110,16 +127,22 @@ export default {
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       showGroup: false,
-      conditions: [{
-        name: '信使'
+      searchProp: '',
+      options: [{
+        name: '信使',
+        code: 'messenger'
       }, {
-        name: 'SKU'
+        name: 'SKU',
+        code: 'product'
       }, {
-        name: '省份'
+        name: '省份',
+        code: 'state_id_name'
       }, {
-        name: '城市'
+        name: '城市',
+        code: 'city_id_name'
       }, {
-        name: '终端'
+        name: '终端',
+        code: 'hospital'
       }],
       times_filter: [{
         name: '分析周期'
@@ -137,7 +160,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../style'
 
 .page-businessMain
   position absolute

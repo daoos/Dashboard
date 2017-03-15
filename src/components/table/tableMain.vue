@@ -85,6 +85,5 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../style/table'
 
 </style>

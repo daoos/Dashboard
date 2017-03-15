@@ -1,7 +1,7 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-businessRepeat">
-    <v-header></v-header>
+    <v-header :options="conditions"></v-header>
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
@@ -57,7 +57,11 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <data-tables :data='tableData' :search-def='{show:false}' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+      <data-tables :data='tableData'
+      ref='table'
+      :search-def='{props:searchProp}'
+      :has-action-col="false"
+      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
         <el-table-column prop="sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
         <el-table-column prop="product" label="SKU"></el-table-column>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>
@@ -85,6 +89,9 @@ export default {
     exportExcel
   },
   created() {
+    this.$root.$on('selectChange', v => {
+      this.searchProp = v
+    })
     this._init()
   },
   data() {
@@ -93,12 +100,16 @@ export default {
       startDate: '2016-10-01',
       endDate: '2017-03-01',
       monthValue: '',
+      searchProp: '',
       conditions: [{
-        name: 'SKU'
+        name: 'SKU',
+        code: 'product'
       }, {
-        name: '省份'
+        name: '省份',
+        code: 'state_id_name'
       }, {
-        name: '城市'
+        name: '城市',
+        code: 'city_id_name'
       }],
       options: [{
         value: '选项1',
@@ -130,7 +141,8 @@ export default {
       })
     },
     exportData() {
-      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '区域重复购进汇总')
+      let table = this.$refs.table
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '区域重复购进汇总')
     }
   }
 }

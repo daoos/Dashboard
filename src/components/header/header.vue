@@ -6,15 +6,13 @@
       <div class="search">
         <span class="text">搜索</span>
         <div class="input-wrapper">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-caret-bottom el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>选择一</el-dropdown-item>
-              <el-dropdown-item>选择二</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <el-select v-model="selectValue" clearable placeholder="请选择" @change="selectChange(selectValue)">
+            <el-option
+              v-for="item in options"
+              :label="item.name"
+              :value="item.code">
+            </el-option>
+          </el-select>
           <input type="text" v-model="searchInput" v-on:input="onInput(searchInput)">
           <i class="el-icon-search"></i>
         </div>
@@ -28,18 +26,21 @@ import Vue from 'vue'
 
 export default {
   props: {
-    tableData: [Array]
+    tableData: Array,
+    options: Array
   },
   data() {
     return {
-      searchInput: ''
+      searchInput: '',
+      selectValue: ''
     }
   },
   methods: {
+    selectChange(val) {
+      this.$root.$emit('selectChange', val)
+    },
     onInput(val) {
-      window.x = this.$parent.$refs.table
       Vue.set(this.$parent.$refs.table, 'searchKey', this.searchInput)
-      // console.log(this.$parent.$refs.table)
     }
   }
 }
@@ -47,7 +48,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../style'
+@import '../../style/'
 
 .bi-header
   .header-bar
@@ -83,13 +84,22 @@ export default {
         margin-left 10px
         background rgba(255,255,255,0.6)
         border-radius 8px
-        .el-dropdown
+        .el-select
           cursor pointer
+          width 80px
+          font-size 16px
+          .el-input__icon
+            color #868686
+            margin-top -2px
+            z-index 999
+          input::-webkit-input-placeholder
+            font-size 15px
+            color $gray-color
         input
           position relative
           top -3px
           font-size 16px
-          width 240px
+          width 180px
           height 18px
           background none
           border none

@@ -15,9 +15,9 @@
       "_id": "AVqZMU28KspVqwx1YJLm",
       "_score": 1,
       "_source": {
-        "product": "维格列汀",
+        "product": "维格列汀1",
         "sales_count_sum": 240,
-        "city_id_name": "太原市",
+        "city_id_name": "太原市2",
         "visit_count_sum": 1,
         "state_id_name": "山西省",
         "doctor_evaluate_sum": 0,
@@ -35,9 +35,9 @@
       "_id": "AVqZMUysKspVqwx1YJLl",
       "_score": 1,
       "_source": {
-        "product": "维格列汀",
+        "product": "维格列汀2",
         "sales_count_sum": 240,
-        "city_id_name": "太原市",
+        "city_id_name": "太原市1",
         "visit_count_sum": 1,
         "state_id_name": "山西省",
         "doctor_evaluate_sum": 1,
