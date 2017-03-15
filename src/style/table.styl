@@ -2,43 +2,53 @@
   background #f6f6f6
   min-height calc(100% - 306px)
   text-align center
-  padding 0 $content-padding 20px
-  // 重写样式
-  .sc-table
-    position relative
-    .el-table
-      border none
-      background #f6f6f6
-      font-family STHeitiSC-Medium
-      &::before
-        height 0
-      table
-        width 100%
-      td,th
-        text-align center
-        height 40px
-      th[colspan="4"],th[colspan="3"],th[colspan="2"]
+  padding 20px $content-padding
+// 重写样式
+.sc-table
+  position relative
+  .tool-bar
+    display: none;
+  .el-table
+    border none
+    background #f6f6f6
+    &::before
+      height 0
+    .group
+      position: absolute;
+      white-space: nowrap;
+      line-height: 0
+    table
+      width 100%
+    td,th
+      text-align center
+      height 40px
+    th[colspan="4"],th[colspan="3"],th[colspan="2"]
+      background white
+      .cell
+        font-size 18px
         background white
-        .cell
-          font-size 18px
-          background white
-          color $subject-color
-      th[colspan="1"]
-        background #EFEFEF
-        .cell
-          font-size 15px
-          color #959595
-          background #EFEFEF
-      th[rowspan="2"]
-        background $subject-color
-        .cell
-          font-size 18px
-          color white
-          background $subject-color
-      td
+        color $subject-color
+    th[colspan="1"]
+      background #EFEFEF
+      .cell
         font-size 14px
-      .table-date-column
-        .cell
-          padding 0 2px
-     .el-pagination
+        color #959595
+        background #EFEFEF
+    th[rowspan="2"]
+      background $subject-color
+      .cell
+        font-size 18px
+        color white
+        background $subject-color
+    td
+      font-size 14px
+    .table-date-column
+      .cell
+        padding 0 2px
+   .page-wrapper
+      padding-top: 20px
+   .pagination-wrap
+      .el-pagination
         text-align: right
+   .go-detail-icon
+      color $gray-color

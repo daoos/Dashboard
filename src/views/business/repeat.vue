@@ -58,13 +58,13 @@
     </div>
     <div class="table-wrapper">
       <data-tables :data='tableData' :search-def='{show:false}' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
-        <el-table-column prop="_source.sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
-        <el-table-column prop="_source.product" label="SKU"></el-table-column>
-        <el-table-column prop="_source.state_id_name" label="省份"></el-table-column>
-        <el-table-column prop="_source.city_id_name" label="城市"></el-table-column>
-        <el-table-column prop="_source.last_month_task_available_hospital" label="重复购进信使负责终端数"></el-table-column>
-        <el-table-column prop="_source.last_month_task_assign_hospital" label="重复购进信使可负责终端数"></el-table-column>
-        <el-table-column prop="_source.last_month_sales_hospital" label="重复购进终端数"></el-table-column>
+        <el-table-column prop="sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
+        <el-table-column prop="product" label="SKU"></el-table-column>
+        <el-table-column prop="state_id_name" label="省份"></el-table-column>
+        <el-table-column prop="city_id_name" label="城市"></el-table-column>
+        <el-table-column prop="last_month_task_available_hospital" label="重复购进信使负责终端数"></el-table-column>
+        <el-table-column prop="last_month_task_assign_hospital" label="重复购进信使可负责终端数"></el-table-column>
+        <el-table-column prop="last_month_sales_hospital" label="重复购进终端数"></el-table-column>
       </data-tables>
     </div>
   </div>
@@ -121,7 +121,12 @@ export default {
   methods: {
     _init() {
       bisRepeat().then((res) => {
-        this.tableData = res.data.hits.hits
+        let arr = res.data.hits.hits
+        let tempArr = []
+        arr.forEach((t) => {
+          tempArr.push(t._source)
+        })
+        this.tableData = tempArr
       })
     },
     exportData() {

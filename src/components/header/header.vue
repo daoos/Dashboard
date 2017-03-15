@@ -24,12 +24,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 export default {
   props: {
     tableData: [Array]
-  },
-  created() {
-    console.log(this.tableData);
   },
   data() {
     return {
@@ -38,7 +37,9 @@ export default {
   },
   methods: {
     onInput(val) {
-      console.log(this.$parent)
+      window.x = this.$parent.$refs.table
+      Vue.set(this.$parent.$refs.table, 'searchKey', this.searchInput)
+      // console.log(this.$parent.$refs.table)
     }
   }
 }
@@ -46,7 +47,8 @@ export default {
 </script>
 
 <style lang="stylus">
-$subject-color = #10A0F7
+@import '../../style'
+
 .bi-header
   .header-bar
     padding-left 38px
@@ -71,11 +73,13 @@ $subject-color = #10A0F7
       font-size 21px
       line-height 70px
       color white
+      .text
+        font-size 18px
       .input-wrapper
         display inline
-        height 40px
+        height 30px
         width 400px
-        padding 7px
+        padding 5px
         margin-left 10px
         background rgba(255,255,255,0.6)
         border-radius 8px
@@ -92,9 +96,9 @@ $subject-color = #10A0F7
           appearance none
           outline 0
         .el-icon-search
-          font-size 20px
-          width 20px
-          height 20px
+          font-size 18px
+          width 18px
+          height 18px
           margin-right 6px
           color $subject-color
 </style>

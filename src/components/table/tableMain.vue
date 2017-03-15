@@ -1,26 +1,32 @@
 <template lang="html">
-  <div class="bi-table">
-    <el-table :data="tableData" border align="center" width="1500">
-        <el-table-column prop="_source.current_date" label="日期" width="110" class-name="table-date-column" style="background:blue"></el-table-column>
+  <div class="sc-table">
+    <el-table :data="tableData" align="center">
+        <el-table-column label="分组" width="100" inline-template>
+          <div class="group">
+            富露施F300（2）
+          </div>
+        </el-table-column>
         <el-table-column label="基本信息">
-          <el-table-column prop="_source.product" label="SKU" width="120"></el-table-column>
-          <el-table-column prop="_source.state_id_name" label="省份" width="120"></el-table-column>
-          <el-table-column prop="_source.city_id_name" label="城市" width="120"></el-table-column>
-          <el-table-column prop="_source.hospital" label="终端" width="150"></el-table-column>
+          <el-table-column label="SKU"></el-table-column>
+          <el-table-column label="省份"></el-table-column>
+          <el-table-column label="城市"></el-table-column>
+          <el-table-column label="终端" min-width="140"></el-table-column>
         </el-table-column>
         <el-table-column label="用户信息">
-          <el-table-column prop="_source.messenger" label="负责信使" width="120"></el-table-column>
-          <el-table-column prop="_source.total_count" label="累计关注医生" width="150"></el-table-column>
-          <el-table-column prop="_source.doc_count" label="关注医生" width="120"></el-table-column>
+          <el-table-column label="负责信使"></el-table-column>
+          <el-table-column label="累计关注医生"></el-table-column>
+          <el-table-column label="关注医生"></el-table-column>
         </el-table-column>
         <el-table-column label="实际拜访数据">
-          <el-table-column prop="_source.visit_count_sum" label="拜访次数" width="120"></el-table-column>
-          <el-table-column prop="_source.read_material_sum" label="阅读次数" width="120"></el-table-column>
-          <el-table-column prop="_source.doctor_evaluate_sum" label="反馈次数" width="120"></el-table-column>
+          <el-table-column label="拜访次数"></el-table-column>
+          <el-table-column label="阅读次数"></el-table-column>
+          <el-table-column label="反馈次数"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
-          <el-table-column prop="_source.sales_count_sum" label="销售数量" width="120"></el-table-column>
-          <el-table-column prop="_source.sales_amount_sum" label="销售额" width="120"></el-table-column>
+          <el-table-column label="销售数量"></el-table-column>
+          <el-table-column label="销售额" inline-template>
+            <i class="el-icon-arrow-right go-detail-icon"></i>
+          </el-table-column>
         </el-table-column>
       </el-table>
       <div class="page-wrapper">
@@ -79,46 +85,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../style/variable'
-// 重写样式
-.bi-table
-  position relative
-  .el-table
-    border none
-    background #f6f6f6
-    font-family STHeitiSC-Medium
-    &::before
-      height 0
-    table
-      width 100%!important
-    td,th
-      text-align center
-      height 40px
-    th[colspan="4"],th[colspan="3"],th[colspan="2"]
-      background white
-      .cell
-        font-size 18px
-        background white
-        color $subject-color
-    th[colspan="1"]
-      background #EFEFEF
-      .cell
-        font-size 15px
-        color #959595
-        background #EFEFEF
-    th[rowspan="2"]
-      background $subject-color
-      .cell
-        font-size 18px
-        color white
-        background $subject-color
-    td
-      font-size 14px
-    .table-date-column
-      .cell
-        padding 0 2px
-   .page-wrapper
-      position absolute
-      right 0
-      padding-top 10px
+@import '../../style/table'
+
 </style>

@@ -5,7 +5,7 @@
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
-        <span class="item" v-for="item in conditions">{{item.name}}</span>
+        <span class="item" v-for="item in conditions" @click="item.selected=true">{{item.name}}</span>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
@@ -38,29 +38,30 @@
       </div>
     </div>
     <div class="table-wrapper">
-      <data-tables :data='tableData' :search-def='{show:false}' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
-        <el-table-column prop="_source.current_date" label="日期" width="100" class-name="table-date-column" style="background:blue"></el-table-column>
+      <data-tables v-if="!showGroup" ref="table" :data='tableData' :has-action-col="false" :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+        <el-table-column prop="current_date" label="日期" width="100"></el-table-column>
         <el-table-column label="基本信息">
-          <el-table-column prop="_source.product" label="SKU" min-width="100"></el-table-column>
-          <el-table-column prop="_source.state_id_name" label="省份"></el-table-column>
-          <el-table-column prop="_source.city_id_name" label="城市"></el-table-column>
-          <el-table-column prop="_source.hospital" label="终端" min-width="140"></el-table-column>
+          <el-table-column prop="product" label="SKU" min-width="100"></el-table-column>
+          <el-table-column prop="state_id_name" label="省份"></el-table-column>
+          <el-table-column prop="city_id_name" label="城市"></el-table-column>
+          <el-table-column prop="hospital" label="终端" min-width="140"></el-table-column>
         </el-table-column>
         <el-table-column label="用户信息">
-          <el-table-column prop="_source.messenger" label="负责信使"></el-table-column>
-          <el-table-column prop="_source.total_count" label="累计关注医生"></el-table-column>
-          <el-table-column prop="_source.doc_count" label="关注医生"></el-table-column>
+          <el-table-column prop="messenger" label="负责信使"></el-table-column>
+          <el-table-column prop="total_count" label="累计关注医生"></el-table-column>
+          <el-table-column prop="doc_count" label="关注医生"></el-table-column>
         </el-table-column>
         <el-table-column label="实际拜访数据">
-          <el-table-column prop="_source.visit_count_sum" label="拜访次数"></el-table-column>
-          <el-table-column prop="_source.read_material_sum" label="阅读次数"></el-table-column>
-          <el-table-column prop="_source.doctor_evaluate_sum" label="反馈次数"></el-table-column>
+          <el-table-column prop="visit_count_sum" label="拜访次数"></el-table-column>
+          <el-table-column prop="read_material_sum" label="阅读次数"></el-table-column>
+          <el-table-column prop="doctor_evaluate_sum" label="反馈次数"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
-          <el-table-column prop="_source.sales_count_sum" label="销售数量"></el-table-column>
-          <el-table-column prop="_source.sales_amount_sum" label="销售额"></el-table-column>
+          <el-table-column prop="sales_count_sum" label="销售数量"></el-table-column>
+          <el-table-column prop="sales_amount_sum" label="销售额"></el-table-column>
         </el-table-column>
       </data-tables>
+      <v-table :data="tableData" v-if="showGroup"></v-table>
     </div>
   </div>
 </template>
@@ -69,7 +70,6 @@
 import tableMain from 'components/table/tableMain'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
-import vuex from 'vuex'
 import {
   bisMain
 } from 'service/getData'
@@ -81,13 +81,35 @@ export default {
     exportExcel
   },
   created() {
+    window.x = this
     this._init()
+  },
+  computed: {
+    showGroup() {
+      return this.conditions.some((t) => t.selected)
+    }
+  },
+  methods: {
+    exportData() {
+      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '信使拜访数据汇总')
+    },
+    _init() {
+      bisMain().then((res) => {
+        let arr = res.data.hits.hits
+        let tempArr = []
+        arr.forEach((t) => {
+          tempArr.push(t._source)
+        })
+        this.tableData = tempArr
+      })
+    }
   },
   data() {
     return {
       tableData: [],
       startDate: '2016-10-01',
       endDate: '2017-03-01',
+      showGroup: false,
       conditions: [{
         name: '信使'
       }, {
@@ -108,16 +130,6 @@ export default {
       }, {
         name: '年报'
       }]
-    }
-  },
-  methods: {
-    exportData() {
-      this.$refs.exportExcel.exportCsv(this.$refs.table, this.tableData, '信使拜访数据汇总')
-    },
-    _init() {
-      bisMain().then((res) => {
-        this.tableData = res.data.hits.hits
-      })
     }
   }
 }
