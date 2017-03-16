@@ -6,7 +6,7 @@
       <div class="conditions">
         <span class="title">过滤条件：</span>
         <div class="bi-checkbox-wrapper">
-          <bi-checkbox-group :items="options.slice()"></bi-checkbox-group>
+          <bi-checkbox-group :items="options.slice()" @check-change="checkChange"></bi-checkbox-group>
         </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
@@ -16,6 +16,8 @@
         <div class="start">
           <span class="text">起始：</span>
           <el-date-picker
+            ref='startDate'
+            @change='timeChange'
             type="date"
             v-model="startDate"
             :clearable="false"
@@ -25,6 +27,8 @@
         <div class="end">
           <span class="text">截止：</span>
           <el-date-picker
+            ref='endDate'
+            @change='timeChange'
             type="date"
             v-model="endDate"
             :clearable="false"
@@ -32,7 +36,7 @@
           </el-date-picker>
         </div>
         <div class="time-wrapper">
-          <bi-checkbox-group :items="times_filter"></bi-checkbox-group>
+          <bi-checkbox-group :items="times_filter" @check-change="timeChange"></bi-checkbox-group>
         </div>
       </div>
       <div class="export-wrapper" @click="exportData()">
@@ -41,8 +45,10 @@
     </div>
     <div class="table-wrapper">
       <data-tables
-      v-if="!showGroup"
+      v-show="!showGroup"
       ref="table"
+      :border="true"
+      :stripe="true"
       :data='tableData'
       :has-action-col="false"
       :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
@@ -69,7 +75,45 @@
           <el-table-column prop="sales_amount_sum" label="销售额"></el-table-column>
         </el-table-column>
       </data-tables>
-      <v-table :data="tableData" v-if="showGroup"></v-table>
+
+      <data-tables
+      v-show="showGroup"
+      @row-click='rowClick'
+      :border="false"
+      :stripe="false"
+      :data='groupData'
+      :has-action-col="false"
+      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
+      :search-def='{props:searchProp}'>
+        <el-table-column label="分组" width="100">
+          <template  scope="scope">
+            <div class="group">{{scope.row.key}} ({{scope.row.doc_count}})</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="基本信息">
+          <el-table-column label="SKU"></el-table-column>
+          <el-table-column label="省份"></el-table-column>
+          <el-table-column label="城市"></el-table-column>
+          <el-table-column label="终端" min-width="140"></el-table-column>
+        </el-table-column>
+        <el-table-column label="用户信息">
+          <el-table-column label="负责信使"></el-table-column>
+          <el-table-column label="累计关注医生"></el-table-column>
+          <el-table-column label="关注医生"></el-table-column>
+        </el-table-column>
+        <el-table-column label="实际拜访数据">
+          <el-table-column label="拜访次数"></el-table-column>
+          <el-table-column label="阅读次数"></el-table-column>
+          <el-table-column label="反馈次数"></el-table-column>
+        </el-table-column>
+        <el-table-column label="实际销售数据">
+          <el-table-column label="销售数量"></el-table-column>
+          <el-table-column label="销售额" inline-template>
+            <i class="el-icon-arrow-right go-detail-icon"></i>
+          </el-table-column>
+        </el-table-column>
+      </data-tables>
+      <!-- <v-table :data="groupData" v-if="showGroup"></v-table> -->
     </div>
   </div>
 </template>
@@ -80,7 +124,8 @@ import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import BiCheckboxGroup from 'components/checkbox-group'
 import {
-  bisMain
+  bisMain,
+  bisMainByGroup
 } from 'service/getData'
 
 export default {
@@ -94,15 +139,28 @@ export default {
     this.$root.$on('selectChange', v => {
       this.searchProp = v
     })
-    window.x = this
     this._init()
   },
-  computed: {
-    showGroup() {
-      return this.conditions.some((t) => t.selected)
-    }
-  },
   methods: {
+    rowClick(row) {
+      console.log(row);
+    },
+    timeChange(item) {
+      console.log(this.$refs.startDate.displayValue, this.$refs.endDate.displayValue);
+    },
+    checkChange(item) {
+      console.log(item);
+      if (!item) {
+        this.showGroup = false
+        return
+      }
+      this.showGroup = true
+      let startTime = this.$refs.startDate.displayValue
+      let endTime = this.$refs.endDate.displayValue
+      bisMainByGroup(item.code, startTime, endTime).then(res => {
+        this.groupData = res.data.aggregations[item.code].buckets
+      })
+    },
     getProps() {
       let arr = []
       this.options.forEach(t => {
@@ -137,6 +195,7 @@ export default {
       endDate: '2017-03-01',
       showGroup: false,
       searchProp: '',
+      groupData: [],
       options: [{
         name: '信使',
         code: 'messenger'

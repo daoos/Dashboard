@@ -1,8 +1,17 @@
 <template lang="html">
   <div class="bi-header">
     <el-menu theme="dark" default-active="1" class="header-bar" mode="horizontal">
-      <el-menu-item index="1">概览</el-menu-item>
-      <el-menu-item index="2">分析</el-menu-item>
+      <div v-if="!showRouter">
+        <el-menu-item index="1">概览</el-menu-item>
+        <el-menu-item index="2">分析</el-menu-item>
+      </div>
+      <div class="breadcrumb" v-if="showRouter">
+        <el-breadcrumb>
+          <el-breadcrumb-item v-for="item in routerArr" @click="test">
+            <span @click.stop.prevent="breadClick(item)">{{item.name}}</span>
+          </el-breadcrumb-item>
+        </el-breadcrumb>
+      </div>
       <div class="search">
         <span class="text">搜索</span>
         <div class="input-wrapper">
@@ -27,7 +36,8 @@ import Vue from 'vue'
 export default {
   props: {
     tableData: Array,
-    options: Array
+    options: Array,
+    routerArr: Array
   },
   data() {
     return {
@@ -35,12 +45,19 @@ export default {
       selectValue: ''
     }
   },
+  computed: {
+    showRouter() {
+      return this.routerArr.length
+    }
+  },
   methods: {
+    breadClick(item) {
+      console.log(item);
+    },
     selectChange(val) {
       this.$root.$emit('selectChange', val)
     },
     onInput(val) {
-      window.x = this.$parent.$refs.table
       Vue.set(this.$parent.$refs.table, 'searchKey', this.searchInput)
     }
   }
@@ -49,12 +66,23 @@ export default {
 </script>
 
 <style lang="stylus">
-@import '../../style/'
-
+@import '../../style'
 .bi-header
   .header-bar
     padding-left 38px
     background $subject-color
+    .breadcrumb
+      display inline
+      float left
+      .el-breadcrumb
+        line-height 70px
+        font-size 16px
+        .el-breadcrumb__item
+          .el-breadcrumb__item__inner
+            color rgba(255,255,255,0.6)
+          &:last-child
+            .el-breadcrumb__item__inner
+              color white
     .el-menu-item
       height 70px
       padding 0
@@ -70,6 +98,7 @@ export default {
         background transparent!important
     .search
       position absolute
+      float right
       right 77px
       font-family STHeitiSC-Medium
       font-size 21px

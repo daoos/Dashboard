@@ -1,10 +1,10 @@
 <template lang="html">
   <div class="sc-table">
-    <el-table :data="tableData" align="center">
-        <el-table-column label="分组" width="100" inline-template>
-          <div class="group">
-            富露施F300（2）
-          </div>
+    <el-table :data="curTableData" align="center" :border="border">
+        <el-table-column label="分组" width="100">
+          <template  scope="scope">
+            <div class="group">{{scope.row.key}} ({{scope.row.doc_count}})</div>
+          </template>
         </el-table-column>
         <el-table-column label="基本信息">
           <el-table-column label="SKU"></el-table-column>
@@ -35,7 +35,7 @@
           :current-page="currentPage"
           :page-size="pageSize"
           layout="total, prev, pager, next"
-          :total="data.length">
+          :total="total">
         </el-pagination>
       </div>
   </div>
@@ -46,38 +46,31 @@ export default {
   props: {
     data: Array
   },
-  watch: {
-    data() {
-      this._init()
+  computed: {
+    tableData() {
+      return this.data.slice()
+    },
+    total() {
+      return this.tableData.length
+    },
+    curTableData() {
+      let from = this.pageSize * (this.currentPage - 1)
+      let to = from + this.pageSize
+      return this.tableData.slice(from, to)
     }
   },
   methods: {
-    _init() {
-      let count = 0
-      let arr = []
-      this.data.forEach((item, index) => {
-        arr.push(item)
-        count++
-        if (count === this.pageSize || index === this.data.length - 1) {
-          this.splitData.push(arr)
-          arr = []
-          count = 0
-        }
-      })
-      this.tableData = this.splitData[0]
-    },
     handleCurrentChange(val) {
-      this.currentPage = val || 1;
-      this.tableData = this.splitData[val - 1]
+      this.currentPage = val
       console.log(`当前页: ${val}`)
     }
   },
   data() {
     return {
       splitData: [],
-      tableData: [],
       currentPage: 1,
-      pageSize: 10
+      pageSize: 10,
+      border: false
     }
   }
 }

@@ -13,11 +13,16 @@ export default {
   },
   data() {
     return {
-      checkArr: this.items
+      checkArr: this.items,
+      lastCode: ''
     }
   },
   methods: {
     checkItem(item, flag) {
+      if (this.lastCode === item.code && flag) {
+        return
+      }
+      this.lastCode = item.code
       let arr = this.checkArr.slice()
       arr.forEach(i => {
         i.checked = false
@@ -26,6 +31,11 @@ export default {
         }
       });
       this.checkArr = arr
+      if (!flag) {
+        item = false
+        this.lastCode = ''
+      }
+      this.$emit('check-change', item)
     }
   }
 }
