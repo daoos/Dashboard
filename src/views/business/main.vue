@@ -1,7 +1,7 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-businessMain">
-    <v-header :tableData="tableData" :options="options"></v-header>
+    <v-header :tableData="tableData" :options="options" :routerArr="routerArr"></v-header>
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
@@ -113,7 +113,6 @@
           </el-table-column>
         </el-table-column>
       </data-tables>
-      <!-- <v-table :data="groupData" v-if="showGroup"></v-table> -->
     </div>
   </div>
 </template>
@@ -136,6 +135,7 @@ export default {
     BiCheckboxGroup
   },
   created() {
+    window.x = this
     this.$root.$on('selectChange', v => {
       this.searchProp = v
     })
@@ -144,22 +144,20 @@ export default {
   methods: {
     rowClick(row) {
       console.log(row);
+      this.showGroup = false
+      this.$store.state.routerArr.push(this.$store.state.filterItems.slice().pop());
+      this._queryGroup()
     },
     timeChange(item) {
       console.log(this.$refs.startDate.displayValue, this.$refs.endDate.displayValue);
     },
     checkChange(item) {
-      console.log(item);
       if (!item) {
         this.showGroup = false
         return
       }
       this.showGroup = true
-      let startTime = this.$refs.startDate.displayValue
-      let endTime = this.$refs.endDate.displayValue
-      bisMainByGroup(item.code, startTime, endTime).then(res => {
-        this.groupData = res.data.aggregations[item.code].buckets
-      })
+      this._queryGroup(item)
     },
     getProps() {
       let arr = []
@@ -171,6 +169,13 @@ export default {
     exportData() {
       let table = this.$refs.table
       this.$refs.exportExcel.exportCsv(table, table.tableData, '信使拜访数据汇总')
+    },
+    _queryGroup(item) {
+      let startTime = this.$refs.startDate.displayValue
+      let endTime = this.$refs.endDate.displayValue
+      bisMainByGroup(item.code, startTime, endTime).then(res => {
+        this.groupData = res.data.aggregations[item.code].buckets
+      })
     },
     _init() {
       bisMain().then((res) => {
@@ -196,6 +201,7 @@ export default {
       showGroup: false,
       searchProp: '',
       groupData: [],
+      routerArr: [],
       options: [{
         name: '信使',
         code: 'messenger'

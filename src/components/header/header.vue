@@ -7,7 +7,7 @@
       </div>
       <div class="breadcrumb" v-if="showRouter">
         <el-breadcrumb>
-          <el-breadcrumb-item v-for="item in routerArr" @click="test">
+          <el-breadcrumb-item v-for="item in $store.state.routerArr">
             <span @click.stop.prevent="breadClick(item)">{{item.name}}</span>
           </el-breadcrumb-item>
         </el-breadcrumb>
@@ -31,34 +31,56 @@
 </template>
 
 <script>
-import Vue from 'vue'
-
 export default {
   props: {
     tableData: Array,
-    options: Array,
-    routerArr: Array
+    options: Array
   },
   data() {
     return {
       searchInput: '',
-      selectValue: ''
+      selectValue: '',
+      clickItem: ''
     }
+  },
+  created() {
+    // 监听vuex的变化
+    this.$store.watch(
+      (state) => {
+        // header顶部历史记录
+        return state.routerArr
+      },
+      () => {
+        // callback
+        console.log(this.myRouterArr);
+      }
+    )
   },
   computed: {
     showRouter() {
-      return this.routerArr.length
+      return this.$store.state.routerArr.length > 1
     }
   },
   methods: {
     breadClick(item) {
-      console.log(item);
+      let store = this.$store.state
+      let index = store.routerArr.length
+      store.routerArr.forEach((d, i) => {
+        if (d.name === item.name) {
+          index = i + 1
+          if (index === 1) {
+            this.$store.state.filterItem = ''
+          }
+          return
+        }
+      })
+      store.routerArr = store.routerArr.slice(0, index)
     },
     selectChange(val) {
       this.$root.$emit('selectChange', val)
     },
     onInput(val) {
-      Vue.set(this.$parent.$refs.table, 'searchKey', this.searchInput)
+      this.$set(this.$parent.$refs.table, 'searchKey', this.searchInput)
     }
   }
 }
@@ -76,7 +98,7 @@ export default {
       float left
       .el-breadcrumb
         line-height 70px
-        font-size 16px
+        font-size 18px
         .el-breadcrumb__item
           .el-breadcrumb__item__inner
             color rgba(255,255,255,0.6)

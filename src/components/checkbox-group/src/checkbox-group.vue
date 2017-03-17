@@ -1,7 +1,11 @@
 <template lang="html">
   <div class="bi-checkbox-group">
-    <span class="bi-checkbox" v-for="item in checkArr" :class="{'checked':item.checked}" @click="checkItem(item,true)">
-      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked" @click.stop="checkItem(item)"></i>
+    <span
+    class="bi-checkbox"
+    v-for="item in checkArr"
+    :class="{'checked':item.checked,'disabled':item.disabled}"
+    @click="checkItem(item,true)">
+      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked" @click.stop="checkItem(item,false)"></i>
     </span>
   </div>
 </template>
@@ -13,24 +17,62 @@ export default {
   },
   data() {
     return {
-      checkArr: this.items,
-      lastCode: ''
+      lastCode: '',
+      flag: true,
+      item: {},
+      store: this.$store.state
+    }
+  },
+  created() {
+    // 监听vuex的变化
+    this.$store.watch(
+      (state) => {
+        // header顶部历史记录
+        return state.routerArr
+      },
+      () => {
+        // callback
+      }
+    )
+  },
+  computed: {
+    checkArr() {
+      let arr = this.items.slice()
+        // let item = this.store.filterItems.slice().pop()
+      arr.forEach(i => {
+        i.checked = false
+        i.disabled = false
+        if (i.code && i.code === this.item.code) {
+          i.checked = this.flag && true
+        }
+        let routerArr = this.$store.state.routerArr
+        if (routerArr.length > 1) {
+          routerArr.forEach(r => {
+            if (r.code === i.code) {
+              i.checked = false
+              i.disabled = true
+            }
+          })
+        }
+      });
+      return arr
     }
   },
   methods: {
     checkItem(item, flag) {
-      if (this.lastCode === item.code && flag) {
+      this.flag = flag
+      this.item = item
+      if (item.disabled || this.lastCode === item.code && flag) {
         return
       }
+      // 存储到vuex
+      let filters = this.store.filterItems
+      if (!filters.length) {
+        filters.push(item)
+      } else {
+        filters[filters.length - 1] = item
+      }
       this.lastCode = item.code
-      let arr = this.checkArr.slice()
-      arr.forEach(i => {
-        i.checked = false
-        if (i.name === item.name) {
-          i.checked = flag || false
-        }
-      });
-      this.checkArr = arr
       if (!flag) {
         item = false
         this.lastCode = ''
@@ -55,6 +97,8 @@ export default {
     cursor pointer
     margin-left 15px
     line-height 20px
+    &.disabled
+      color $gray-color
     &.checked
       background $subject-color
       color white

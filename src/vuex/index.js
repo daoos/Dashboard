@@ -4,7 +4,12 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-  tableData: {}
+  tableData: {},
+  filterItems: [], // 当前点击的filter
+  routerArr: [{
+    name: '业务数据',
+    code: 'home'
+  }]
 }
 
 export default new Vuex.Store({

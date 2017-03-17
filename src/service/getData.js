@@ -1,6 +1,7 @@
 import axios from 'axios'
 import conf from './config/service'
 import _getUrl from './config/func'
+import store from '../vuex'
 
 const CONFIG = conf
 const USER_NAME = 'ethicall'
@@ -8,6 +9,7 @@ const PSW = 'o0lQc7l*48U$XnRd'
 const AUTH_TOKEN = 'Basic ' + btoa(USER_NAME + ':' + PSW)
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
 
+console.log(store.state);
 /**
  *  信使拜访数据汇总
  */
@@ -49,6 +51,7 @@ export const bisRepByGroup = (filterCode, startTime, endTime) => axios[CONFIG.me
 
 
 function getGroupParams(filterCode, startTime, endTime, flag) {
+  console.log(store.state.routerArr, store.state.filterItem);
   let params = CONFIG.P_GROUP
   if (flag) {
     params.sort = {
@@ -64,6 +67,18 @@ function getGroupParams(filterCode, startTime, endTime, flag) {
       'terms': {
         'size': 10000,
         'field': `${filterCode}.keyword`
+      }
+    }
+  }
+
+  // 分组数据
+  if (store.state.routerArr.length > 1) {
+    params.aggs[filterCode].aggs = {
+      [store.state.filterItem]: {
+        'terms': {
+          'size': 10000,
+          'field': `${store.state.filterItem}.keyword`
+        }
       }
     }
   }
