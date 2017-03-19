@@ -1,12 +1,12 @@
 // 区域重复购进汇总
 <template lang="html">
   <div class="page-businessMain">
-    <v-header :tableData="tableData" :options="options" :routerArr="routerArr"></v-header>
+    <v-header :tableData="tableData" :options="options" :routerArr="routerArr" @breadClick="breadClick"></v-header>
     <div class="et-filters">
       <div class="conditions">
         <span class="title">过滤条件：</span>
         <div class="bi-checkbox-wrapper">
-          <bi-checkbox-group :items="options.slice()" @check-change="checkChange"></bi-checkbox-group>
+          <bi-checkbox-group :items="options" :checkRouter="checkRouter" @check-change="checkChange"></bi-checkbox-group>
         </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
@@ -135,36 +135,67 @@ export default {
     BiCheckboxGroup
   },
   created() {
-    window.x = this
     this.$root.$on('selectChange', v => {
       this.searchProp = v
     })
-    this._init()
+
+    // init
+    this.$nextTick(() => {
+      this._queryDetail()
+      this._setHistory()
+    })
+  },
+  computed: {
+    routerArr() {
+      let arr = [{
+        name: '业务数据',
+        code: 'home'
+      }];
+      // 保证路由顺序的准确
+      this.checkArr.forEach(c => {
+        if (c.disabled) {
+          arr.push(c)
+        }
+      })
+      this.checkArr.forEach(c => {
+        if (c.checked) {
+          arr.push(c)
+        }
+      })
+      return arr
+    },
+    checkRouter() {
+      if (this.showGroup) {
+        if (this.routerArr.length > 1) {
+          return this.routerArr.slice(0, -1)
+        }
+        return []
+      }
+      return this.routerArr
+    }
   },
   methods: {
+    breadClick(backIndex) {
+      window.history.go(-backIndex)
+    },
     rowClick(row) {
-      console.log(row);
       this.showGroup = false
-      this.$store.state.routerArr.push(this.$store.state.filterItems.slice().pop());
-      this._queryGroup()
+      this._queryDetail(row.key)
     },
     timeChange(item) {
       console.log(this.$refs.startDate.displayValue, this.$refs.endDate.displayValue);
     },
-    checkChange(item) {
+    checkChange(item, checkArr) {
+      this.checkArr = checkArr
       if (!item) {
         this.showGroup = false
         return
       }
       this.showGroup = true
       this._queryGroup(item)
-    },
-    getProps() {
-      let arr = []
-      this.options.forEach(t => {
-        arr.push(t.code)
-      })
-      return arr
+      window.history.pushState({
+        checkArr: this.checkArr
+      }, item.name);
     },
     exportData() {
       let table = this.$refs.table
@@ -173,12 +204,23 @@ export default {
     _queryGroup(item) {
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
-      bisMainByGroup(item.code, startTime, endTime).then(res => {
+      bisMainByGroup({
+        routerArr: this.routerArr,
+        startTime: startTime,
+        endTime: endTime
+      }).then(res => {
         this.groupData = res.data.aggregations[item.code].buckets
       })
     },
-    _init() {
-      bisMain().then((res) => {
+    _queryDetail(name) {
+      let startTime = this.$refs.startDate.displayValue
+      let endTime = this.$refs.endDate.displayValue
+      bisMain({
+        routerArr: this.routerArr,
+        startTime: startTime,
+        endTime: endTime,
+        filterName: name || ''
+      }).then((res) => {
         let arr = res.data.hits.hits
         let tempArr = []
         let props = ['current_date', 'product', 'state_id_name', 'city_id_name', 'hospital', 'messenger', 'total_count', 'doc_count', 'visit_count_sum', 'read_material_sum', 'doctor_evaluate_sum', 'sales_count_sum', 'sales_amount_sum']
@@ -191,6 +233,17 @@ export default {
         })
         this.tableData = tempArr
       })
+    },
+    _setHistory() {
+      window.history.pushState({
+        checkArr: this.checkArr
+      }, 'home')
+      window.onpopstate = function() {
+        let data = window.history.state; // 获取当前所在的state
+        this.checkArr = data.checkArr
+        this.options = data.checkArr.slice()
+        console.log(this.checkArr, data.checkArr);
+      }.bind(this)
     }
   },
   data() {
@@ -201,7 +254,22 @@ export default {
       showGroup: false,
       searchProp: '',
       groupData: [],
-      routerArr: [],
+      checkArr: [{
+        name: '信使',
+        code: 'messenger'
+      }, {
+        name: 'SKU',
+        code: 'product'
+      }, {
+        name: '省份',
+        code: 'state_id_name'
+      }, {
+        name: '城市',
+        code: 'city_id_name'
+      }, {
+        name: '终端',
+        code: 'hospital'
+      }], // 筛选条件状态
       options: [{
         name: '信使',
         code: 'messenger'

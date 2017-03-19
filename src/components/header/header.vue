@@ -7,8 +7,8 @@
       </div>
       <div class="breadcrumb" v-if="showRouter">
         <el-breadcrumb>
-          <el-breadcrumb-item v-for="item in $store.state.routerArr">
-            <span @click.stop.prevent="breadClick(item)">{{item.name}}</span>
+          <el-breadcrumb-item v-for="(item,index) in routerArr">
+            <span @click.stop.prevent="breadClick(index)">{{item.name}}</span>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -34,7 +34,8 @@
 export default {
   props: {
     tableData: Array,
-    options: Array
+    options: Array,
+    routerArr: Array
   },
   data() {
     return {
@@ -43,38 +44,26 @@ export default {
       clickItem: ''
     }
   },
-  created() {
-    // 监听vuex的变化
-    this.$store.watch(
-      (state) => {
-        // header顶部历史记录
-        return state.routerArr
-      },
-      () => {
-        // callback
-        console.log(this.myRouterArr);
-      }
-    )
-  },
   computed: {
     showRouter() {
-      return this.$store.state.routerArr.length > 1
+      return this.routerArr.length > 1
     }
   },
   methods: {
-    breadClick(item) {
-      let store = this.$store.state
-      let index = store.routerArr.length
-      store.routerArr.forEach((d, i) => {
-        if (d.name === item.name) {
-          index = i + 1
-          if (index === 1) {
-            this.$store.state.filterItem = ''
-          }
-          return
-        }
-      })
-      store.routerArr = store.routerArr.slice(0, index)
+    breadClick(index) {
+      // let index = this.routerArr.length
+      // store.routœerArr.forEach((d, i) => {
+      //   if (d.name === item.name) {
+      //     index = i + 1
+      //     if (index === 1) {
+      //       this.$store.state.filterItem = ''
+      //     }
+      //     return
+      //   }
+      // })
+      // this.routerArr = this.routerArr.slice(0, index)
+      let i = this.routerArr.length - index - 1
+      this.$emit('breadClick', i)
     },
     selectChange(val) {
       this.$root.$emit('selectChange', val)

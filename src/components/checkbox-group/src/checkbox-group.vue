@@ -13,7 +13,8 @@
 <script>
 export default {
   props: {
-    items: Array
+    items: Array,
+    checkRouter: Array
   },
   data() {
     return {
@@ -22,18 +23,6 @@ export default {
       item: {},
       store: this.$store.state
     }
-  },
-  created() {
-    // 监听vuex的变化
-    this.$store.watch(
-      (state) => {
-        // header顶部历史记录
-        return state.routerArr
-      },
-      () => {
-        // callback
-      }
-    )
   },
   computed: {
     checkArr() {
@@ -45,9 +34,9 @@ export default {
         if (i.code && i.code === this.item.code) {
           i.checked = this.flag && true
         }
-        let routerArr = this.$store.state.routerArr
-        if (routerArr.length > 1) {
-          routerArr.forEach(r => {
+        let checkRouter = this.checkRouter || []
+        if (checkRouter.length) {
+          checkRouter.forEach(r => {
             if (r.code === i.code) {
               i.checked = false
               i.disabled = true
@@ -77,7 +66,7 @@ export default {
         item = false
         this.lastCode = ''
       }
-      this.$emit('check-change', item)
+      this.$emit('check-change', item, this.checkArr)
     }
   }
 }

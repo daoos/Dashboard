@@ -6,7 +6,7 @@
       <div class="conditions">
         <span class="title">过滤条件：</span>
         <div class="bi-checkbox-wrapper">
-          <bi-checkbox-group :items="conditions.slice()"></bi-checkbox-group>
+          <bi-checkbox-group :items="conditions.slice()" @check-change="checkChange"></bi-checkbox-group>
         </div>
         <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
@@ -95,6 +95,7 @@ export default {
   created() {
     this.$root.$on('selectChange', v => {
       this.searchProp = v
+      console.log(v);
     })
     this._init()
   },
@@ -134,6 +135,9 @@ export default {
     }
   },
   methods: {
+    checkChange(item) {
+      console.log(item);
+    },
     _init() {
       bisRepeat().then((res) => {
         let arr = res.data.hits.hits

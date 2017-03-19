@@ -9,18 +9,19 @@ const PSW = 'o0lQc7l*48U$XnRd'
 const AUTH_TOKEN = 'Basic ' + btoa(USER_NAME + ':' + PSW)
 axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
 
-console.log(store.state);
 /**
  *  信使拜访数据汇总
  */
-export const bisMain = () => axios[CONFIG.method](_getUrl(CONFIG.business.main), CONFIG.PARAMS)
+export const bisMain = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.main), getGroupParams(p))
 
 /**
  *  信使拜访数据分组查询
  *  filterCode 分组字段，单选
  *  startTime、endTime 开始、结束时间
  */
-export const bisMainByGroup = (filterCode, startTime, endTime) => axios[CONFIG.method](_getUrl(CONFIG.business.main), getGroupParams(filterCode, startTime, endTime))
+export const bisMainByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.main), getGroupParams(Object.assign(p, {
+  isGroup: true
+})))
 
 
 /**
@@ -34,7 +35,9 @@ export const bisTerminal = () => axios[CONFIG.method](_getUrl(CONFIG.business.te
  *  startTime、endTime 开始、结束时间
  *  true 是否修改请求参数，将current_date变成sales_month
  */
-export const bisTerByGroup = (filterCode, startTime, endTime) => axios[CONFIG.method](_getUrl(CONFIG.business.terminal), getGroupParams(filterCode, startTime, endTime, true))
+export const bisTerByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.terminal), getGroupParams(Object.assign(p, {
+  flag: true
+})))
 
 /**
  *  区域重复购进汇总
@@ -49,38 +52,59 @@ export const bisRepeat = () => axios[CONFIG.method](_getUrl(CONFIG.business.repe
  */
 export const bisRepByGroup = (filterCode, startTime, endTime) => axios[CONFIG.method](_getUrl(CONFIG.business.repeat), getGroupParams(filterCode, startTime, endTime, true))
 
-
-function getGroupParams(filterCode, startTime, endTime, flag) {
-  console.log(store.state.routerArr, store.state.filterItem);
+/**
+ * [getGroupParams description]
+ * @param  {[type]} filterCode [description]
+ * @param  {[type]} startTime  [description]
+ * @param  {[type]} endTime    [description]
+ * @param  {[type]} flag       [description]
+ * @return {[type]}            [description]
+ */
+function getGroupParams(p) {
   let params = CONFIG.P_GROUP
-  if (flag) {
+  if (!p.isGroup) {
+    params.size = 10000
+  }
+  let filterCode = p.routerArr.slice().pop().code
+  if (p.flag) {
     params.sort = {
       'sales_month': 'desc'
     }
   }
   params.query.bool.filter.range.current_date = {
-    'gte': startTime,
-    'lte': endTime
+    'gte': p.startTime,
+    'lte': p.endTime
   }
-  params.aggs = {
-    [filterCode]: {
-      'terms': {
-        'size': 10000,
-        'field': `${filterCode}.keyword`
-      }
-    }
-  }
-
-  // 分组数据
-  if (store.state.routerArr.length > 1) {
-    params.aggs[filterCode].aggs = {
-      [store.state.filterItem]: {
+  if (filterCode !== 'home') {
+    params.aggs = {
+      [filterCode]: {
         'terms': {
           'size': 10000,
-          'field': `${store.state.filterItem}.keyword`
+          'field': `${filterCode}.keyword`
         }
       }
     }
   }
+  console.log(p.filterName);
+  // 详细信息查询条件
+  if (p.filterName) {
+    params.query.bool.must.push({
+      'term': {
+        [`${filterCode}.keyword`]: p.filterName
+      }
+    })
+  }
+
+  // // 分组数据
+  // if (p.routerArr.length > 1) {
+  //   params.aggs[filterCode].aggs = {
+  //     [filterCode]: {
+  //       'terms': {
+  //         'size': 10000,
+  //         'field': `${store.state.filterItem}.keyword`
+  //       }
+  //     }
+  //   }
+  // }
   return params
 }
