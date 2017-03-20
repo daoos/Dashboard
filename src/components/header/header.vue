@@ -7,8 +7,8 @@
       </div>
       <div class="breadcrumb" v-if="showRouter">
         <el-breadcrumb>
-          <el-breadcrumb-item v-for="(item,index) in routerArr">
-            <span @click.stop.prevent="breadClick(index)">{{item.name}}</span>
+          <el-breadcrumb-item v-for="(item,index) in routerArr" :key="item.code">
+            <span @click.stop.prevent="breadClick(item,index)">{{item.name}}</span>
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
@@ -19,7 +19,8 @@
             <el-option
               v-for="item in options"
               :label="item.name"
-              :value="item.code">
+              :value="item.code"
+              :key="item.code">
             </el-option>
           </el-select>
           <input type="text" v-model="searchInput" v-on:input="onInput(searchInput)">
@@ -33,9 +34,9 @@
 <script>
 export default {
   props: {
-    tableData: Array,
     options: Array,
-    routerArr: Array
+    routerArr: Array,
+    flag: Boolean // 判断对分组表格还是详情表格进行数据筛选
   },
   data() {
     return {
@@ -50,26 +51,23 @@ export default {
     }
   },
   methods: {
-    breadClick(index) {
-      // let index = this.routerArr.length
-      // store.routœerArr.forEach((d, i) => {
-      //   if (d.name === item.name) {
-      //     index = i + 1
-      //     if (index === 1) {
-      //       this.$store.state.filterItem = ''
-      //     }
-      //     return
-      //   }
-      // })
-      // this.routerArr = this.routerArr.slice(0, index)
+    breadClick(item, index) {
+      let len = this.routerArr.length
+      if (len - 1 === index) {
+        return
+      }
       let i = this.routerArr.length - index - 1
-      this.$emit('breadClick', i)
+      this.$emit('breadClick', item, i)
     },
     selectChange(val) {
       this.$root.$emit('selectChange', val)
     },
     onInput(val) {
-      this.$set(this.$parent.$refs.table, 'searchKey', this.searchInput)
+      let table = 'table'
+      if (this.flag) {
+        table = 'groupTable'
+      }
+      this.$set(this.$parent.$refs[table], 'searchKey', this.searchInput)
     }
   }
 }

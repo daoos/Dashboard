@@ -27,7 +27,9 @@ export const bisMainByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.busines
 /**
  *  区域终端购进汇总
  */
-export const bisTerminal = () => axios[CONFIG.method](_getUrl(CONFIG.business.terminal), CONFIG.PARAMS_REPEAT)
+export const bisTerminal = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.terminal), getGroupParams(Object.assign(p, {
+  flag: true
+})))
 
 /**
  *  信使拜访数据分组查询
@@ -36,13 +38,16 @@ export const bisTerminal = () => axios[CONFIG.method](_getUrl(CONFIG.business.te
  *  true 是否修改请求参数，将current_date变成sales_month
  */
 export const bisTerByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.terminal), getGroupParams(Object.assign(p, {
+  isGroup: true,
   flag: true
 })))
 
 /**
  *  区域重复购进汇总
  */
-export const bisRepeat = () => axios[CONFIG.method](_getUrl(CONFIG.business.repeat), CONFIG.PARAMS_REPEAT)
+export const bisRepeat = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.repeat), getGroupParams(Object.assign(p, {
+  flag: true
+})))
 
 /**
  *  信使拜访数据分组查询
@@ -50,7 +55,10 @@ export const bisRepeat = () => axios[CONFIG.method](_getUrl(CONFIG.business.repe
  *  startTime、endTime 开始、结束时间
  *  true 是否修改请求参数，将current_date变成sales_month
  */
-export const bisRepByGroup = (filterCode, startTime, endTime) => axios[CONFIG.method](_getUrl(CONFIG.business.repeat), getGroupParams(filterCode, startTime, endTime, true))
+export const bisRepByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.repeat), getGroupParams(Object.assign(p, {
+  isGroup: true,
+  flag: true
+})))
 
 /**
  * [getGroupParams description]
@@ -62,20 +70,26 @@ export const bisRepByGroup = (filterCode, startTime, endTime) => axios[CONFIG.me
  */
 function getGroupParams(p) {
   let params = CONFIG.P_GROUP
-  if (!p.isGroup) {
+  if (p.isGroup) {
+    params.size = 0
+  } else {
     params.size = 10000
   }
-  let filterCode = p.routerArr.slice().pop().code
+  let filterCode = p.item.code
   if (p.flag) {
     params.sort = {
       'sales_month': 'desc'
+    }
+  } else {
+    params.sort = {
+      'current_date': 'desc'
     }
   }
   params.query.bool.filter.range.current_date = {
     'gte': p.startTime,
     'lte': p.endTime
   }
-  if (filterCode !== 'home') {
+  if (filterCode !== 'home' && p.isGroup) {
     params.aggs = {
       [filterCode]: {
         'terms': {
@@ -85,15 +99,18 @@ function getGroupParams(p) {
       }
     }
   }
-  console.log(p.filterName);
   // 详细信息查询条件
-  if (p.filterName) {
+  let arr = p.filterNameArr
+  params.query.bool.must = []
+  p.filterNameArr = p.filterNameArr || []
+  p.filterNameArr.forEach(r => {
+    let filterCode = r.code
     params.query.bool.must.push({
       'term': {
-        [`${filterCode}.keyword`]: p.filterName
+        [`${filterCode}.keyword`]: r.name
       }
     })
-  }
+  })
 
   // // 分组数据
   // if (p.routerArr.length > 1) {

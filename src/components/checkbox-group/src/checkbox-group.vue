@@ -2,10 +2,10 @@
   <div class="bi-checkbox-group">
     <span
     class="bi-checkbox"
-    v-for="item in checkArr"
+    v-for="item in items"
     :class="{'checked':item.checked,'disabled':item.disabled}"
     @click="checkItem(item,true)">
-      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked" @click.stop="checkItem(item,false)"></i>
+      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked" @click.stop.prevent="checkItem(item,false)"></i>
     </span>
   </div>
 </template>
@@ -20,53 +20,35 @@ export default {
     return {
       lastCode: '',
       flag: true,
-      item: {},
-      store: this.$store.state
+      item: {}
     }
   },
   computed: {
-    checkArr() {
-      let arr = this.items.slice()
-        // let item = this.store.filterItems.slice().pop()
-      arr.forEach(i => {
-        i.checked = false
-        i.disabled = false
-        if (i.code && i.code === this.item.code) {
-          i.checked = this.flag && true
-        }
-        let checkRouter = this.checkRouter || []
-        if (checkRouter.length) {
-          checkRouter.forEach(r => {
-            if (r.code === i.code) {
-              i.checked = false
-              i.disabled = true
-            }
-          })
-        }
-      });
-      return arr
-    }
+    // checkArr() {
+    //   let arr = this.items.slice()
+    //     // let item = this.store.filterItems.slice().pop()
+    //   arr.forEach(i => {
+    //     i.checked = false
+    //     i.disabled = false
+    //     if (i.code && i.code === this.item.code) {
+    //       i.checked = this.flag && true
+    //     }
+    //     let checkRouter = this.checkRouter || []
+    //     if (checkRouter.length) {
+    //       checkRouter.forEach(r => {
+    //         if (r.code === i.code) {
+    //           i.checked = false
+    //           i.disabled = true
+    //         }
+    //       })
+    //     }
+    //   });
+    //   return arr
+    // }
   },
   methods: {
     checkItem(item, flag) {
-      this.flag = flag
-      this.item = item
-      if (item.disabled || this.lastCode === item.code && flag) {
-        return
-      }
-      // 存储到vuex
-      let filters = this.store.filterItems
-      if (!filters.length) {
-        filters.push(item)
-      } else {
-        filters[filters.length - 1] = item
-      }
-      this.lastCode = item.code
-      if (!flag) {
-        item = false
-        this.lastCode = ''
-      }
-      this.$emit('check-change', item, this.checkArr)
+      this.$emit('check-change', item, flag)
     }
   }
 }
