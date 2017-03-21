@@ -1,9 +1,9 @@
 import axios from 'axios'
-import conf from './config/service'
+import config from './config/service'
 import _getUrl from './config/func'
 import store from '../vuex'
 
-const CONFIG = conf
+const CONFIG = config
 const USER_NAME = 'ethicall'
 const PSW = 'o0lQc7l*48U$XnRd'
 const AUTH_TOKEN = 'Basic ' + btoa(USER_NAME + ':' + PSW)
@@ -69,7 +69,8 @@ export const bisRepByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business
  * @return {[type]}            [description]
  */
 function getGroupParams(p) {
-  let params = CONFIG.P_GROUP
+  let timeCode = 'current_date' // 根据flag来端盘筛选时间的字段
+  const params = deepCopy(CONFIG.P_GROUP)
   if (p.isGroup) {
     params.size = 0
   } else {
@@ -77,15 +78,12 @@ function getGroupParams(p) {
   }
   let filterCode = p.item.code
   if (p.flag) {
-    params.sort = {
-      'sales_month': 'desc'
-    }
-  } else {
-    params.sort = {
-      'current_date': 'desc'
-    }
+    timeCode = 'sales_month'
   }
-  params.query.bool.filter.range.current_date = {
+  params.sort = {
+    [timeCode]: 'desc'
+  }
+  params.query.bool.filter.range[timeCode] = {
     'gte': p.startTime,
     'lte': p.endTime
   }
@@ -124,4 +122,12 @@ function getGroupParams(p) {
   //   }
   // }
   return params
+}
+
+function deepCopy(source) {
+  var result = {};
+  for (var key in source) {
+    result[key] = typeof source[key] === 'object' ? deepCopy(source[key]) : source[key];
+  }
+  return result;
 }

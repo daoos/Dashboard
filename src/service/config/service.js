@@ -16,18 +16,18 @@ let params = {
 let pGroup = {
   'size': 0,
   'sort': {
-    'current_date': {
-      'order': 'desc'
-    }
+    // 'current_date': {
+    //   'order': 'desc'
+    // }
   },
   'query': {
     'bool': {
       'filter': {
         'range': {
-          'current_date': {
-            'gte': '2015-01-01',
-            'lte': '2017-01-01'
-          }
+          // 'current_date': {
+          //   'gte': '2015-01-01',
+          //   'lte': '2017-01-01'
+          // }
         }
       },
       'must': []
@@ -61,9 +61,4 @@ export default CONFIG
 // 判断是否是本地环境
 function isLocal() {
   return window.location.hostname === 'localhost'
-}
-
-// false代表repeat
-function getParams(flag) {
-
 }

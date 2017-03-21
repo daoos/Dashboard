@@ -47,6 +47,7 @@
     <div class="table-wrapper">
       <data-tables
       v-show="!showGroup"
+      v-loading.body="loading&&!showGroup"
       ref="table"
       :border="true"
       :stripe="true"
@@ -79,6 +80,7 @@
 
       <data-tables
       v-show="showGroup"
+      v-loading.body="loading&&showGroup"
       @row-click='rowClick'
       :border="false"
       :stripe="false"
@@ -270,6 +272,7 @@ export default {
     },
     _queryGroup() {
       this.showGroup = true
+      this.loading = true
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
       bisMainByGroup({
@@ -278,11 +281,13 @@ export default {
         endTime: endTime,
         filterNameArr: this.filterNameArr
       }).then(res => {
+        this.loading = false
         this.groupData = res.data.aggregations[this.item.code].buckets
       })
     },
     _queryDetail() {
       this.showGroup = false
+      this.loading = true
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
       bisMain({
@@ -291,6 +296,7 @@ export default {
         endTime: endTime,
         filterNameArr: this.filterNameArr
       }).then((res) => {
+        this.loading = false
         let arr = res.data.hits.hits
         let tempArr = []
         let props = ['current_date', 'product', 'state_id_name', 'city_id_name', 'hospital', 'messenger', 'total_count', 'doc_count', 'visit_count_sum', 'read_material_sum', 'doctor_evaluate_sum', 'sales_count_sum', 'sales_amount_sum']
@@ -316,14 +322,14 @@ export default {
       }
     },
     _setHistory(data) {
-      // let data = this.store.pop()
+      this.loading = false
+      this.showGroup = false
       this.item = data.item
       this.checkArr = data.checkArr.slice()
       this.routerArr = data.routerArr.slice()
       this.filterNameArr = data.filterNameArr.slice()
       this.lastCode = data.lastCode
       this.tableData = data.tableData
-      this.showGroup = false
     },
     _getStartDate() {
       let split = 3 // 查询跨度三个月
@@ -338,6 +344,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       store: [],
       tableData: [],
       startDate: this._getStartDate(),

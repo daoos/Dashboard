@@ -16,7 +16,7 @@
         <div class="start">
           <span class="text">起始：</span>
           <el-date-picker
-            type="date"
+            type="month"
             ref='startDate'
             v-model="startDate"
             @change='timeChange'
@@ -27,7 +27,7 @@
         <div class="end">
           <span class="text">截止：</span>
           <el-date-picker
-            type="date"
+            type="month"
             ref='endDate'
             v-model="endDate"
             @change='timeChange'
@@ -42,6 +42,8 @@
     </div>
     <div class="table-wrapper">
       <data-tables
+      v-show="!showGroup"
+      v-loading.body="loading&&!showGroup"
       ref='table'
       :border="true"
       :stripe="true"
@@ -49,13 +51,37 @@
       :search-def='{props:searchProp}'
       :has-action-col="false"
       :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
-        <el-table-column prop="sales_month" label="时间" class-name="table-date-column" style="background:blue"></el-table-column>
+        <el-table-column prop="sales_month" label="时间" class-name="table-date-column"></el-table-column>
         <el-table-column prop="product" label="SKU"></el-table-column>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>
         <el-table-column prop="city_id_name" label="城市"></el-table-column>
         <el-table-column prop="hospital_available_count" label="购进信使负责终端数"></el-table-column>
         <el-table-column prop="hospital_assign_count" label="购进信使可负责终端数"></el-table-column>
         <el-table-column prop="hospital_count" label="购进终端数"></el-table-column>
+      </data-tables>
+
+      <data-tables
+      v-show="showGroup"
+      v-loading.body="loading&&showGroup"
+      @row-click='rowClick'
+      :border="false"
+      :stripe="false"
+      :data='groupData'
+      ref="groupTable"
+      :has-action-col="false"
+      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
+      :search-def='{props:searchProp}'>
+        <el-table-column label="分组" width="100">
+          <template  scope="scope">
+            <div class="group">{{scope.row.key}} ({{scope.row.doc_count}})</div>
+          </template>
+        </el-table-column>
+        <el-table-column label="SKU"></el-table-column>
+        <el-table-column label="省份"></el-table-column>
+        <el-table-column label="城市"></el-table-column>
+        <el-table-column label="购进信使负责终端数"></el-table-column>
+        <el-table-column label="购进信使可负责终端数"></el-table-column>
+        <el-table-column label="购进终端数"></el-table-column>
       </data-tables>
     </div>
   </div>
@@ -205,6 +231,7 @@ export default {
       console.log(time);
     },
     _queryGroup() {
+      this.loading = true
       this.showGroup = true
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
@@ -214,11 +241,12 @@ export default {
         endTime: endTime,
         filterNameArr: this.filterNameArr
       }).then(res => {
+        this.loading = false
         this.groupData = res.data.aggregations[this.item.code].buckets
-          // window.history.pushState(this._getStoreObj(), item.name)
       })
     },
     _queryDetail() {
+      this.loading = true
       this.showGroup = false
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
@@ -228,6 +256,7 @@ export default {
         endTime: endTime,
         filterNameArr: this.filterNameArr
       }).then((res) => {
+        this.loading = false
         let arr = res.data.hits.hits
         let tempArr = []
         let props = ['sales_month', 'product', 'state_id_name', 'city_id_name', 'hospital_available_count', 'hospital_assign_count', 'hospital_count']
@@ -240,7 +269,6 @@ export default {
         })
         this.tableData = tempArr
         this.store.push(this._getStoreObj())
-          // window.history.pushState(this._getStoreObj(), this.item.name)
       })
     },
     _getStoreObj() {
@@ -254,14 +282,14 @@ export default {
       }
     },
     _setHistory(data) {
-      // let data = this.store.pop()
+      this.loading = false
+      this.showGroup = false
       this.item = data.item
       this.checkArr = data.checkArr.slice()
       this.routerArr = data.routerArr.slice()
       this.filterNameArr = data.filterNameArr.slice()
       this.lastCode = data.lastCode
       this.tableData = data.tableData
-      this.showGroup = false
     },
     _getStartDate() {
       let split = 3 // 查询跨度三个月
@@ -280,6 +308,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       store: [],
       tableData: [],
       startDate: this._getStartDate(),
