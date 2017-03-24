@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import businessMain from 'views/business/main'
 import businessRepeat from 'views/business/repeat'
 import businessTerminal from 'views/business/terminal'
+import setting from 'views/setting/setting'
 
 Vue.use(Router)
 
@@ -19,5 +20,8 @@ export default new Router({
   }, {
     path: '/business/terminal',
     component: businessTerminal
+  }, {
+    path: '/setting',
+    component: setting
   }]
 })

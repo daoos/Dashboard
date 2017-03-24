@@ -1,9 +1,8 @@
 <template lang="html">
   <div class="bi-header">
-    <el-menu theme="dark" default-active="1" class="header-bar" mode="horizontal">
-      <div v-if="!showRouter">
-        <el-menu-item index="1">概览</el-menu-item>
-        <el-menu-item index="2">分析</el-menu-item>
+    <el-menu theme="dark" :default-active="'0'" class="header-bar" mode="horizontal">
+      <div v-show="!showRouter">
+        <el-menu-item v-for="(menu,i) in menuArr" :index="i+''" :key="i">{{menu.name}}</el-menu-item>
       </div>
       <div class="breadcrumb" v-if="showRouter">
         <el-breadcrumb>
@@ -12,7 +11,7 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
-      <div class="search">
+      <div class="search" v-if="showSearch">
         <span class="text">搜索</span>
         <div class="input-wrapper">
           <el-select v-model="selectValue" clearable placeholder="请选择" @change="selectChange(selectValue)">
@@ -34,9 +33,35 @@
 <script>
 export default {
   props: {
-    options: Array,
-    routerArr: Array,
-    flag: Boolean // 判断对分组表格还是详情表格进行数据筛选
+    options: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    routerArr: {
+      type: Array,
+      default () {
+        return []
+      }
+    },
+    flag: Boolean, // 判断对分组表格还是详情表格进行数据筛选
+    showSearch: {
+      type: Boolean,
+      default () {
+        return true
+      }
+    },
+    menuArr: {
+      type: Array,
+      default () {
+        return [{
+          name: '概览'
+        }, {
+          name: '分析'
+        }]
+      }
+    }
   },
   data() {
     return {
@@ -51,6 +76,9 @@ export default {
     }
   },
   methods: {
+    test(i) {
+      console.log(i);
+    },
     breadClick(item, index) {
       let len = this.routerArr.length
       if (len - 1 === index) {
@@ -97,7 +125,7 @@ export default {
       padding 0
       margin 0 20px
       line-height 70px
-      font-size 21px
+      font-size 18px
       color rgba(255, 255, 255, 0.6)
       &.is-active
         color white

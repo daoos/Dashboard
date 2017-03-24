@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import tableTerminal from 'components/table/tableTerminal'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import BiCheckboxGroup from 'components/checkbox-group'
@@ -100,7 +99,6 @@ import {
 const date = new Date()
 export default {
   components: {
-    'v-table': tableTerminal,
     'v-header': header,
     exportExcel,
     BiCheckboxGroup

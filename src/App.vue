@@ -7,23 +7,19 @@
         <el-menu-item index="/1">Dashboard</el-menu-item>
         <el-menu-item index="2">页面数据</el-menu-item>
         <el-submenu index="3">
-          <template slot="title">业务数据
-
-</template>
+          <template slot="title">业务数据</template>
           <el-menu-item index="/business/main">信使拜访数据汇总</el-menu-item>
           <el-menu-item index="/business/terminal">区域终端购进汇总</el-menu-item>
           <el-menu-item index="/business/repeat">区域重复购进汇总</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="4">财务数据</el-menu-item>
-        <el-menu-item index="5">设置</el-menu-item>
+        <el-menu-item index="/setting">设置</el-menu-item>
       </el-menu>
     </el-col>
   </div>
   <transition name="router-fade" mode="out-in">
-    <keep-alive>
-    	<router-view class="router-view"></router-view>
-    </keep-alive>
+  	<router-view class="router-view"></router-view>
   </transition>
 </div>
 

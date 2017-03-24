@@ -110,7 +110,6 @@
 </template>
 
 <script>
-import tableRepeat from 'components/table/tableRepeat'
 import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import BiCheckboxGroup from 'components/checkbox-group'
@@ -122,7 +121,6 @@ import {
 let date = new Date()
 export default {
   components: {
-    'v-table': tableRepeat,
     'v-header': header,
     exportExcel,
     BiCheckboxGroup
