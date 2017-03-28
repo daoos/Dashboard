@@ -72,7 +72,7 @@
       :data='tableData'
       :search-def='{props:searchProp}'
       :has-action-col="false"
-      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'>
+      :pagination-def='{pageSize:20,pageSizes:[20,50,100]}'>
         <el-table-column prop="sales_month" label="时间" class-name="table-date-column"></el-table-column>
         <el-table-column prop="product" label="SKU"></el-table-column>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>

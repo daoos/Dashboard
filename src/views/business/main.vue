@@ -53,7 +53,7 @@
       :stripe="true"
       :data='tableData'
       :has-action-col="false"
-      :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
+      :pagination-def='{pageSize:20,pageSizes:[20,50,100]}'
       :search-def='{props:searchProp}'>
         <el-table-column prop="current_date" label="日期" width="100"></el-table-column>
         <el-table-column label="基本信息">
