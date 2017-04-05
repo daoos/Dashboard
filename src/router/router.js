@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import businessMain from 'views/business/main'
 import businessRepeat from 'views/business/repeat'
 import businessTerminal from 'views/business/terminal'
-import setting from 'views/setting/setting'
+import setting from 'views/setting'
 
 Vue.use(Router)
 
