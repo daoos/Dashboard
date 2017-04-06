@@ -4,13 +4,17 @@ import businessMain from 'views/business/main'
 import businessRepeat from 'views/business/repeat'
 import businessTerminal from 'views/business/terminal'
 import setting from 'views/setting'
+import login from 'views/login'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [{
     path: '',
-    redirect: '/business/main'
+    redirect: '/login'
+  }, {
+    path: '/login',
+    component: login
   }, {
     path: '/business/main',
     component: businessMain

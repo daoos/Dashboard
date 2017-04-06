@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-@import '../../style'
+@import '../../../style'
 .tel
   .time
     position: absolute

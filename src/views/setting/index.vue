@@ -2,7 +2,7 @@
   <div class="bi-setting">
     <v-header :showSearch="false" :menuArr="menuArr"></v-header>
     <div class="content">
-      <div class="title">{{title}}</div>
+      <div class="title"><v-title :title="title"></v-title></div>
       <div class="form" v-show="showInfo">
         <el-row :gutter="30" class="info">
           <el-col :span="6">用户</el-col>
@@ -45,14 +45,16 @@
 
 <script>
 import header from 'components/header/header'
-import user from 'components/modify/user'
-import tel from 'components/modify/tel'
-import mail from 'components/modify/mail'
-import psw from 'components/modify/psw'
+import title from 'components/title'
+import user from './modify/user'
+import tel from './modify/tel'
+import mail from './modify/mail'
+import psw from './modify/psw'
 
 export default {
   components: {
     'v-header': header,
+    'v-title': title,
     user,
     tel,
     mail,
@@ -104,28 +106,11 @@ export default {
 <style lang="stylus" scoped>
 @import '../../style'
 
-w(l,r)
-  position absolute
-  content ''
-  top 4px
-  height 16px
-  width 4px
-  left l
-  right r
-  background $subject-color
-
 .bi-setting
   .content
     margin 70px 77px
     .title
-      position relative
-      display inline-block
-      font-size 21px
       margin-bottom 30px
-      &::before
-        w(-10px,auto)
-      &::after
-        w(auto,-10px)
     .form
       width 700px
       .info
