@@ -54,6 +54,11 @@ export default {
     }
   },
   methods: {
+    login() {
+      this.$router.push({
+        path: 'business/main'
+      })
+    },
     showLogin() {
       this.title = '登录'
       for (let x in this.viewflag) {
@@ -84,15 +89,6 @@ export default {
 <style lang="stylus" scoped>
 @import '../../style'
 .bi-login
-  position fixed
-  top 0
-  left 0
-  right 0
-  bottom 0
-  width 100%
-  height auto
-  background #f6f6f6
-  z-index 9
   .header
     height 70px
     background $subject-color

@@ -340,7 +340,7 @@ export default {
 
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
 
 .page-businessTerminal
   background #f6f6f6

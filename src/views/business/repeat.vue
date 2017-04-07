@@ -363,8 +363,7 @@ export default {
 
 </script>
 
-<style lang="stylus">
-@import '../../style/variable'
+<style lang="stylus" scoped>
 
 .page-businessRepeat
   background #f6f6f6
