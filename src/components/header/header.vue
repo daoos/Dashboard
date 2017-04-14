@@ -26,6 +26,7 @@
           <i class="el-icon-search"></i>
         </div>
       </div>
+      <span class="logout" @click="logout()">注销</span>
     </el-menu>
   </div>
 </template>
@@ -76,8 +77,11 @@ export default {
     }
   },
   methods: {
-    test(i) {
-      console.log(i);
+    logout() {
+      this.$store.state.loginflag = false
+      this.$router.push({
+        path: '/login'
+      })
     },
     breadClick(item, index) {
       let len = this.routerArr.length
@@ -99,7 +103,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="stylus">
@@ -178,4 +181,12 @@ export default {
           height 18px
           margin-right 6px
           color $subject-color
+    .logout
+      position absolute
+      right 20px
+      cursor pointer
+      line-height 70px
+      color white
+      &:active
+        opacity 0.8
 </style>

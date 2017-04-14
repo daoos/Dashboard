@@ -4,10 +4,7 @@ import _getUrl from './config/func'
 import store from '../vuex'
 
 const CONFIG = config
-const USER_NAME = 'ethicall'
-const PSW = 'o0lQc7l*48U$XnRd'
-const AUTH_TOKEN = 'Basic ' + btoa(USER_NAME + ':' + PSW)
-axios.defaults.headers.common['Authorization'] = AUTH_TOKEN
+
 
 /**
  *  信使拜访数据汇总
@@ -60,6 +57,28 @@ export const bisRepByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.business
   flag: true
 })))
 
+
+/**
+ *  信使关注详情
+ *  filterCode 分组字段，单选
+ *  startTime、endTime 开始、结束时间
+ *  true 是否修改请求参数，将current_date变成sales_month
+ */
+export const MesAttDetail = (p) => axios[CONFIG.method](_getUrl(CONFIG.att_detail), getGroupParams(Object.assign(p, {
+  create_date_flag: true
+})))
+
+/**
+ *  信使关注详情分组
+ *  filterCode 分组字段，单选
+ *  startTime、endTime 开始、结束时间
+ *  true 是否修改请求参数，将current_date变成sales_month
+ */
+export const MesAttDetailByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.att_detail), getGroupParams(Object.assign(p, {
+  create_date_flag: true,
+  isGroup: true
+})))
+
 /**
  * [getGroupParams description]
  * @param  {[type]} filterCode [description]
@@ -77,8 +96,13 @@ function getGroupParams(p) {
     params.size = 10000
   }
   let filterCode = p.item.code
+  let timeflag = p.timeflag
   if (p.flag) {
     timeCode = 'sales_month'
+  }
+  // 信使关注详情
+  if (p.create_date_flag) {
+    timeCode = 'create_date'
   }
   params.sort = {
     [timeCode]: 'desc'
@@ -87,12 +111,34 @@ function getGroupParams(p) {
     'gte': p.startTime,
     'lte': p.endTime
   }
-  if (filterCode !== 'home' && p.isGroup) {
-    params.aggs = {
-      [filterCode]: {
-        'terms': {
-          'size': 10000,
-          'field': `${filterCode}.keyword`
+  if ((filterCode !== 'home' && p.isGroup) || timeflag) {
+    // 按月查询
+    if (filterCode !== 'home' && p.isGroup) {
+      params.aggs = {
+        [filterCode]: {
+          'terms': {
+            'size': 10000,
+            'field': `${filterCode}.keyword`
+          }
+        }
+      }
+      if (timeflag) {
+        params.aggs[filterCode].aggs = {
+          'timeflag': {
+            'date_histogram': {
+              'field': 'current_date',
+              'interval': timeflag
+            }
+          }
+        }
+      }
+    } else {
+      params.aggs = {
+        'timeflag': {
+          'date_histogram': {
+            'field': 'current_date',
+            'interval': timeflag
+          }
         }
       }
     }

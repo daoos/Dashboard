@@ -15,7 +15,7 @@
         <div class="start">
           <span class="text">起始：</span>
           <el-date-picker
-            type="month"
+            type="date"
             ref='startDate'
             v-model="startDate"
             @change='timeChange'
@@ -26,7 +26,7 @@
         <div class="end">
           <span class="text">截止：</span>
           <el-date-picker
-            type="month"
+            type="date"
             ref='endDate'
             v-model="endDate"
             @change='timeChange'
@@ -54,13 +54,13 @@
       :search-def='{props:searchProp}'
       :has-action-col="false"
       :pagination-def='{pageSize:20,pageSizes:[20,50,100]}'>
-        <el-table-column prop="sales_month" label="时间" class-name="table-date-column"></el-table-column>
-        <el-table-column prop="product" label="省份"></el-table-column>
-        <el-table-column prop="state_id_name" label="城市"></el-table-column>
-        <el-table-column prop="city_id_name" label="信使"></el-table-column>
-        <el-table-column prop="hospital_available_count" label="注册手机"></el-table-column>
-        <el-table-column prop="hospital_assign_count" label="状态"></el-table-column>
-        <el-table-column prop="hospital_count" label="经纪人"></el-table-column>
+        <el-table-column prop="create_date" label="时间" class-name="table-date-column"></el-table-column>
+        <el-table-column prop="source_state_name" label="省份"></el-table-column>
+        <el-table-column prop="source_city_name" label="城市"></el-table-column>
+        <el-table-column prop="source_name" label="信使"></el-table-column>
+        <el-table-column prop="source_mobile" label="注册手机"></el-table-column>
+        <el-table-column prop="state_str" label="状态"></el-table-column>
+        <el-table-column prop="broker_id_name" label="经纪人"></el-table-column>
       </data-tables>
 
       <data-tables
@@ -95,8 +95,8 @@ import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import BiCheckboxGroup from 'components/checkbox-group'
 import {
-  bisTerminal,
-  bisTerByGroup
+  MesAttDetail,
+  MesAttDetailByGroup
 } from 'service/getData'
 
 const date = new Date()
@@ -236,7 +236,7 @@ export default {
       this.showGroup = true
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
-      bisTerByGroup({
+      MesAttDetailByGroup({
         item: this.item,
         startTime: startTime,
         endTime: endTime,
@@ -251,7 +251,7 @@ export default {
       this.showGroup = false
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
-      bisTerminal({
+      MesAttDetail({
         item: this.item,
         startTime: startTime,
         endTime: endTime,
@@ -260,11 +260,15 @@ export default {
         this.loading = false
         let arr = res.data.hits.hits
         let tempArr = []
-        let props = ['sales_month', 'product', 'state_id_name', 'city_id_name', 'hospital_available_count', 'hospital_assign_count', 'hospital_count']
+        let props = ['create_date', 'source_state_name', 'source_city_name', 'source_name', 'source_mobile', 'state_str', 'broker_id_name']
         arr.forEach((t) => {
           let obj = {}
           props.forEach(k => {
-            obj[k] = t._source[k]
+            if (k === 'create_date') {
+              obj[k] = t._source[k].split(' ')[0]
+            } else {
+              obj[k] = t._source[k]
+            }
           })
           tempArr.push(obj)
         })
@@ -274,13 +278,16 @@ export default {
     },
     _getStoreObj() {
       return {
-        checkArr: JSON.parse(JSON.stringify(this.checkArr)), // 防止闭包
-        routerArr: JSON.parse(JSON.stringify(this.routerArr)),
-        item: JSON.parse(JSON.stringify(this.item)),
-        filterNameArr: JSON.parse(JSON.stringify(this.filterNameArr)),
-        lastCode: JSON.parse(JSON.stringify(this.lastCode)),
-        tableData: JSON.parse(JSON.stringify(this.tableData))
+        checkArr: this._duplicateData(this.checkArr), // 防止闭包
+        routerArr: this._duplicateData(this.routerArr),
+        item: this._duplicateData(this.item),
+        filterNameArr: this._duplicateData(this.filterNameArr),
+        lastCode: this._duplicateData(this.lastCode),
+        tableData: this._duplicateData(this.tableData)
       }
+    },
+    _duplicateData(data) {
+      return JSON.parse(JSON.stringify(data))
     },
     _setHistory(data) {
       this.loading = false
@@ -329,19 +336,19 @@ export default {
       filterNameArr: [], // 存储筛选详情的数组
       options: [{
         name: '信使',
-        code: 'product'
+        code: 'source_name'
       }, {
         name: '状态',
-        code: 'state_id_name'
+        code: 'state_str'
       }, {
         name: '省份',
-        code: 'city_id_name'
+        code: 'source_state_name'
       }, {
         name: '城市',
-        code: 'city_id_name'
+        code: 'source_city_name'
       }, {
         name: '经纪人',
-        code: 'city_id_name'
+        code: 'broker_id_name'
       }],
       times_filter: [{
         name: '日报'

@@ -294,13 +294,16 @@ export default {
     },
     _getStoreObj() {
       return {
-        checkArr: JSON.parse(JSON.stringify(this.checkArr)), // 防止闭包
-        routerArr: JSON.parse(JSON.stringify(this.routerArr)),
-        item: JSON.parse(JSON.stringify(this.item)),
-        filterNameArr: JSON.parse(JSON.stringify(this.filterNameArr)),
-        lastCode: JSON.parse(JSON.stringify(this.lastCode)),
-        tableData: JSON.parse(JSON.stringify(this.tableData))
+        checkArr: this._duplicateData(this.checkArr), // 防止闭包
+        routerArr: this._duplicateData(this.routerArr),
+        item: this._duplicateData(this.item),
+        filterNameArr: this._duplicateData(this.filterNameArr),
+        lastCode: this._duplicateData(this.lastCode),
+        tableData: this._duplicateData(this.tableData)
       }
+    },
+    _duplicateData(data) {
+      return JSON.parse(JSON.stringify(data))
     },
     _setHistory(data) {
       this.loading = false

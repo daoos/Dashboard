@@ -3,19 +3,19 @@
     <div class="side-menu">
       <el-col :span="8.5">
         <h5 class="title">标题</h5>
-        <el-menu default-active="/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
-          <el-menu-item index="/1">Dashboard</el-menu-item>
-          <el-menu-item index="2">页面数据</el-menu-item>
+        <el-menu default-active="/data/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
+          <el-menu-item index="/data">Dashboard</el-menu-item>
+          <el-menu-item index="/data/pageData">页面数据</el-menu-item>
           <el-submenu index="3">
             <template slot="title">业务数据</template>
-            <el-menu-item index="/business/main">信使拜访数据汇总</el-menu-item>
-            <el-menu-item index="/business/terminal">区域终端购进汇总</el-menu-item>
-            <el-menu-item index="/business/repeat">区域重复购进汇总</el-menu-item>
-            <el-menu-item index="/business/detail">信使关注详情</el-menu-item>
+            <el-menu-item index="/data/business/main">信使拜访数据汇总</el-menu-item>
+            <el-menu-item index="/data/business/terminal">区域终端购进汇总</el-menu-item>
+            <el-menu-item index="/data/business/repeat">区域重复购进汇总</el-menu-item>
+            <el-menu-item index="/data/business/detail">信使关注详情</el-menu-item>
           </el-submenu>
           </el-submenu>
           <el-menu-item index="4">财务数据</el-menu-item>
-          <el-menu-item index="/business/setting">设置</el-menu-item>
+          <el-menu-item index="/data/setting">设置</el-menu-item>
         </el-menu>
       </el-col>
     </div>

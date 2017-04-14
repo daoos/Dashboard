@@ -36,6 +36,7 @@
 import title from 'components/title'
 import forgetPsw from './forgetPsw'
 import success from './success'
+import axios from 'axios'
 
 export default {
   components: {
@@ -55,8 +56,9 @@ export default {
   },
   methods: {
     login() {
+      this.$store.state.loginflag = true
       this.$router.push({
-        path: 'business/main'
+        path: 'data/business/main'
       })
     },
     showLogin() {

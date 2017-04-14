@@ -37,7 +37,7 @@
         </div>
         <div class="time-wrapper">
           <span class="title">分析周期：</span>
-          <bi-checkbox-group :items="times_filter"></bi-checkbox-group>
+          <bi-checkbox-group :showClose="false" :items="times_filter" @check-change="timeFilterClick"></bi-checkbox-group>
         </div>
       </div>
       <div class="export-wrapper" @click="exportData()">
@@ -163,6 +163,8 @@ export default {
       this._setHistory(data)
     },
     rowClick(row) {
+      // 直接
+
       this.filterNameArr.push({
         code: this.item.code,
         name: row.key
@@ -198,10 +200,19 @@ export default {
         }
       })
       this.times_filter = arr
-      this._queryByTime(time)
+      this.timeflag = item.code
+        // this.item = {
+        //   code: 'timeflag'
+        // }
+
+      this._queryByTime()
     },
     // 过滤条件点击事件
     checkChange(item, flag) {
+      // 当前
+      if (this.timeflag !== 'day' && this.showGroup) {
+        return
+      }
       this.item = item
       this.flag = flag
       if (item.disabled || this.lastCode === item.code && flag) {
@@ -265,8 +276,12 @@ export default {
         }
       })
     },
-    _queryByTime(time) {
-      console.log(time);
+    _queryByTime() {
+      if (this.timeflag === 'day') {
+        this._queryDetail()
+      } else {
+        this._queryGroup()
+      }
     },
     _queryGroup() {
       this.showGroup = true
@@ -277,10 +292,21 @@ export default {
         item: this.item,
         startTime: startTime,
         endTime: endTime,
-        filterNameArr: this.filterNameArr
+        filterNameArr: this.filterNameArr,
+        timeflag: this.timeflag === 'day' ? null : this.timeflag
       }).then(res => {
+        let p = this.item.code === 'home' ? 'timeflag' : this.item.code
         this.loading = false
-        this.groupData = res.data.aggregations[this.item.code].buckets
+        this.groupData = res.data.aggregations[p].buckets
+        if (this.timeflag && this.item.code === 'home') {
+          this.groupData.forEach((d) => {
+            if (this.timeflag === 'month') {
+              d.key = d.key_as_string.substring(0, 7)
+            } else {
+              d.key = d.key_as_string.substring(0, 4)
+            }
+          })
+        }
       })
     },
     _queryDetail() {
@@ -301,7 +327,11 @@ export default {
         arr.forEach((t) => {
           let obj = {}
           props.forEach(k => {
-            obj[k] = t._source[k]
+            if (k === 'current_date') {
+              obj[k] = t._source[k].split(' ')[0]
+            } else {
+              obj[k] = t._source[k]
+            }
           })
           tempArr.push(obj)
         })
@@ -311,13 +341,16 @@ export default {
     },
     _getStoreObj() {
       return {
-        checkArr: JSON.parse(JSON.stringify(this.checkArr)), // 防止闭包
-        routerArr: JSON.parse(JSON.stringify(this.routerArr)),
-        item: JSON.parse(JSON.stringify(this.item)),
-        filterNameArr: JSON.parse(JSON.stringify(this.filterNameArr)),
-        lastCode: JSON.parse(JSON.stringify(this.lastCode)),
-        tableData: JSON.parse(JSON.stringify(this.tableData))
+        checkArr: this._duplicateData(this.checkArr), // 防止闭包
+        routerArr: this._duplicateData(this.routerArr),
+        item: this._duplicateData(this.item),
+        filterNameArr: this._duplicateData(this.filterNameArr),
+        lastCode: this._duplicateData(this.lastCode),
+        tableData: this._duplicateData(this.tableData)
       }
+    },
+    _duplicateData(data) {
+      return JSON.parse(JSON.stringify(data))
     },
     _setHistory(data) {
       this.loading = false
@@ -349,6 +382,7 @@ export default {
       endDate: `${date.getFullYear()}-${(date.getMonth() + 1)}-01`,
       showGroup: false,
       searchProp: '',
+      timeflag: '',
       groupData: [],
       item: {
         code: 'home'
@@ -377,16 +411,19 @@ export default {
         code: 'hospital'
       }],
       times_filter: [{
-        name: '日报'
+        name: '日报',
+        code: 'day',
+        checked: true
       }, {
-        name: '周报'
+        name: '月报',
+        code: 'month'
       }, {
-        name: '年报'
+        name: '年报',
+        code: 'year'
       }]
     }
   }
 }
-
 </script>
 
 <style lang="stylus" scoped>

@@ -9,7 +9,8 @@ const state = {
   routerArr: [{
     name: '业务数据',
     code: 'home'
-  }]
+  }],
+  loginflag: true
 }
 
 export default new Vuex.Store({

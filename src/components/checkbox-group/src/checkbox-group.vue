@@ -5,7 +5,7 @@
     v-for="item in items"
     :class="{'checked':item.checked,'disabled':item.disabled}"
     @click="checkItem(item,true)">
-      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked" @click.stop.prevent="checkItem(item,false)"></i>
+      {{item.name}}<i class="el-icon-circle-cross" v-show="item.checked&&showClose" @click.stop.prevent="checkItem(item,false)"></i>
     </span>
   </div>
 </template>
@@ -14,7 +14,13 @@
 export default {
   props: {
     items: Array,
-    checkRouter: Array
+    checkRouter: Array,
+    showClose: {
+      type: Boolean,
+      default () {
+        return true
+      }
+    }
   },
   data() {
     return {
@@ -52,7 +58,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="stylus" scoped>
