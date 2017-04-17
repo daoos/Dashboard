@@ -9,11 +9,25 @@ import DataTables from 'vue-data-tables'
 Vue.use(ElementUI)
 Vue.use(DataTables)
 
-router.beforeEach(({meta, path}, from, next) => {
-  let { auth = true } = meta
-  let isLogin = Boolean(store.state.loginflag) // true用户已登录， false用户未登录
+router.beforeEach(({
+  meta,
+  path
+}, from, next) => {
+  let {
+    auth = true
+  } = meta
+  let isLogin = eval(window.localStorage.loginflag) // true用户已登录， false用户未登录
+  console.log(isLogin);
+  if (isLogin && path === '/login') {
+    return next({
+      path: 'data/business/main'
+    })
+  }
+  // 如果没有登录 则自动跳转登录页面
   if (auth && !isLogin && path !== '/login') {
-    return next({ path: '/login' })
+    return next({
+      path: '/login'
+    })
   }
   next()
 })

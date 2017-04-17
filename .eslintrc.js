@@ -32,6 +32,7 @@ module.exports = {
     'semi': 0,
     'no-new': 0,
     'no-unused-vars': 0,
-    'no-undef': 0
+    'no-undef': 0,
+    'no-eval': 0
   }
 }

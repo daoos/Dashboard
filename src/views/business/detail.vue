@@ -36,7 +36,7 @@
         </div>
         <div class="time-wrapper">
           <span class="title">分析周期：</span>
-          <bi-checkbox-group :items="times_filter"></bi-checkbox-group>
+          <bi-checkbox-group :showClose="false" :items="times_filter" @check-change="timeFilterClick"></bi-checkbox-group>
         </div>
       </div>
       <div class="export-wrapper" @click="exportData()">
@@ -165,7 +165,8 @@ export default {
         }
       })
       this.times_filter = arr
-      this._queryByTime(time)
+      this.timeflag = item.code
+      this._queryByTime()
     },
     // 过滤条件点击事件
     checkChange(item, flag) {
@@ -229,7 +230,11 @@ export default {
       })
     },
     _queryByTime(time) {
-      console.log(time);
+      if (this.timeflag === 'day') {
+        this._queryDetail()
+      } else {
+        this._queryGroup()
+      }
     },
     _queryGroup() {
       this.loading = true
@@ -240,10 +245,21 @@ export default {
         item: this.item,
         startTime: startTime,
         endTime: endTime,
-        filterNameArr: this.filterNameArr
+        filterNameArr: this.filterNameArr,
+        timeflag: this.timeflag === 'day' ? null : this.timeflag
       }).then(res => {
+        let p = this.item.code === 'home' ? 'timeflag' : this.item.code
         this.loading = false
-        this.groupData = res.data.aggregations[this.item.code].buckets
+        this.groupData = res.data.aggregations[p].buckets
+        if (this.timeflag && this.item.code === 'home') {
+          this.groupData.forEach((d) => {
+            if (this.timeflag === 'month') {
+              d.key = d.key_as_string.substring(0, 7)
+            } else {
+              d.key = d.key_as_string.substring(0, 4)
+            }
+          })
+        }
       })
     },
     _queryDetail() {
@@ -351,11 +367,15 @@ export default {
         code: 'broker_id_name'
       }],
       times_filter: [{
-        name: '日报'
+        name: '日报',
+        code: 'day',
+        checked: true
       }, {
-        name: '周报'
+        name: '月报',
+        code: 'month'
       }, {
-        name: '年报'
+        name: '年报',
+        code: 'year'
       }]
     }
   }

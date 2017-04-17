@@ -14,14 +14,14 @@
               <el-input v-model="formLabelAlign.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-              <el-input v-model="formLabelAlign.psw"></el-input>
+              <el-input v-model="formLabelAlign.psw" type="password"></el-input>
             </el-form-item>
-            <el-form-item class="rememberMe">
-              <el-checkbox label="记住我的信息" name="type"></el-checkbox>
-            </el-form-item>
+            <!-- <el-form-item class="rememberMe">
+              <el-checkbox v-model="rememberMe" label="记住我的信息" name="type"></el-checkbox>
+            </el-form-item> -->
             <el-form-item class="buttons">
               <el-button type="primary" @click="login" :size="'large'">登录</el-button>
-              <el-button @click="forgetPsw" type="text">忘记密码</el-button>
+              <!-- <el-button @click="forgetPsw" type="text">忘记密码</el-button> -->
             </el-form-item>
           </el-form>
           <forgetPsw v-if="viewflag.forgetPsw"></forgetPsw>
@@ -36,7 +36,9 @@
 import title from 'components/title'
 import forgetPsw from './forgetPsw'
 import success from './success'
-import axios from 'axios'
+import {
+  loginHttp
+} from 'service/getData'
 
 export default {
   components: {
@@ -56,10 +58,32 @@ export default {
   },
   methods: {
     login() {
-      this.$store.state.loginflag = true
-      this.$router.push({
-        path: 'data/business/main'
-      })
+      if (this.$store.state.isLocal) {
+        window.localStorage.loginflag = true
+        this.$router.push({
+          path: '/data/business/main'
+        })
+      } else {
+        loginHttp({
+          user: {
+            name: this.formLabelAlign.username,
+            psw: this.formLabelAlign.psw
+          }
+        }).then((res) => {
+          let data = res.data
+          if (data.error) {
+            this.$message.error('用户名或密码错误')
+          } else {
+            this.$store.state.user.name = data.username
+            this.$store.state.user.email = data.email
+            this.$store.state.views = data.views
+            window.localStorage.loginflag = true
+            this.$router.push({
+              path: '/data/business/main'
+            })
+          }
+        })
+      }
     },
     showLogin() {
       this.title = '登录'
@@ -74,6 +98,7 @@ export default {
   },
   data() {
     return {
+      rememberMe: false,
       title: '登录',
       viewflag: {
         forgetPsw: false,

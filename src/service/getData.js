@@ -80,6 +80,14 @@ export const MesAttDetailByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.at
 })))
 
 /**
+ * 登录
+ * [loginHttp description]
+ * @param  {[type]} p [description]
+ * @return {[type]}   [description]
+ */
+export const loginHttp = (p) => axios.post(CONFIG.login, p)
+
+/**
  * [getGroupParams description]
  * @param  {[type]} filterCode [description]
  * @param  {[type]} startTime  [description]
@@ -126,7 +134,7 @@ function getGroupParams(p) {
         params.aggs[filterCode].aggs = {
           'timeflag': {
             'date_histogram': {
-              'field': 'current_date',
+              'field': timeCode,
               'interval': timeflag
             }
           }
@@ -136,7 +144,7 @@ function getGroupParams(p) {
       params.aggs = {
         'timeflag': {
           'date_histogram': {
-            'field': 'current_date',
+            'field': timeCode,
             'interval': timeflag
           }
         }

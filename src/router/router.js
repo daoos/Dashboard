@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import business from 'views/business'
+import data from 'views'
 import businessMain from 'views/business/main'
 import businessRepeat from 'views/business/repeat'
 import businessTerminal from 'views/business/terminal'
@@ -20,7 +20,7 @@ export default new Router({
     component: login
   }, {
     path: '/data',
-    component: business,
+    component: data,
     children: [{
       path: 'business/main',
       component: businessMain

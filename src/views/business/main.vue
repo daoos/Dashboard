@@ -201,10 +201,6 @@ export default {
       })
       this.times_filter = arr
       this.timeflag = item.code
-        // this.item = {
-        //   code: 'timeflag'
-        // }
-
       this._queryByTime()
     },
     // 过滤条件点击事件

@@ -4,18 +4,18 @@
       <el-col :span="8.5">
         <h5 class="title">标题</h5>
         <el-menu default-active="/data/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
-          <el-menu-item index="/data">Dashboard</el-menu-item>
-          <el-menu-item index="/data/pageData">页面数据</el-menu-item>
+          <el-menu-item index="/data" v-if="$store.state.views.dashboard">Dashboard</el-menu-item>
+          <el-menu-item index="/pageData" v-if="$store.state.views.pageData">页面数据</el-menu-item>
           <el-submenu index="3">
             <template slot="title">业务数据</template>
-            <el-menu-item index="/data/business/main">信使拜访数据汇总</el-menu-item>
-            <el-menu-item index="/data/business/terminal">区域终端购进汇总</el-menu-item>
-            <el-menu-item index="/data/business/repeat">区域重复购进汇总</el-menu-item>
-            <el-menu-item index="/data/business/detail">信使关注详情</el-menu-item>
+            <el-menu-item index="/data/business/main" v-if="$store.state.views.bisVisit">信使拜访数据汇总</el-menu-item>
+            <el-menu-item index="/data/business/terminal" v-if="$store.state.views.bisTerminal">区域终端购进汇总</el-menu-item>
+            <el-menu-item index="/data/business/repeat" v-if="$store.state.views.bisRepeat">区域重复购进汇总</el-menu-item>
+            <el-menu-item index="/data/business/detail" v-if="$store.state.views.bisDetail">信使关注详情</el-menu-item>
           </el-submenu>
           </el-submenu>
-          <el-menu-item index="4">财务数据</el-menu-item>
-          <el-menu-item index="/data/setting">设置</el-menu-item>
+          <el-menu-item index="4" v-if="$store.state.views.financialData">财务数据</el-menu-item>
+          <el-menu-item index="/data/setting" v-if="$store.state.views.setting">设置</el-menu-item>
         </el-menu>
       </el-col>
     </div>

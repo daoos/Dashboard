@@ -26,7 +26,9 @@
           <i class="el-icon-search"></i>
         </div>
       </div>
-      <span class="logout" @click="logout()">注销</span>
+      <span class="logout">
+        <a href="/logout" @click="logout()">注销</a>
+      </span>
     </el-menu>
   </div>
 </template>
@@ -78,10 +80,8 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.state.loginflag = false
-      this.$router.push({
-        path: '/login'
-      })
+      window.localStorage.loginflag = false
+      console.log('d');
     },
     breadClick(item, index) {
       let len = this.routerArr.length
@@ -186,7 +186,8 @@ export default {
       right 20px
       cursor pointer
       line-height 70px
-      color white
+      a
+        color white
       &:active
         opacity 0.8
 </style>
