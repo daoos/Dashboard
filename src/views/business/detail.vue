@@ -4,7 +4,7 @@
     <v-header :flag="showGroup" :options="options" :routerArr="routerArr" @breadClick="breadClick"></v-header>
     <div class="et-filters">
       <div class="conditions">
-        <span class="title">过滤条件：</span>
+        <span class="title">分组筛选：</span>
         <div class="bi-checkbox-wrapper">
           <bi-checkbox-group :items="checkArr" @check-change="checkChange"></bi-checkbox-group>
         </div>

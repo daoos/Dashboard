@@ -12,6 +12,7 @@ const state = {
   }],
   loginflag: true,
   user: {},
+  province: [], // 限制用户查看的省份
   views: {
     dashboard: true, // DashBoard
     pageData: true, // 页面数据

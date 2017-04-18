@@ -151,6 +151,17 @@ function getGroupParams(p) {
       }
     }
   }
+  // 限制显示城市
+  if (!params.query.bool.should.length) {
+    store.state.province.forEach((c) => {
+      params.query.bool.should.push({
+        'term': {
+          'source_state_name.keyword': c
+        }
+      })
+    })
+  }
+
   // 详细信息查询条件
   let arr = p.filterNameArr
   params.query.bool.must = []

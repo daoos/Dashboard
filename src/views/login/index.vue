@@ -77,6 +77,7 @@ export default {
             this.$store.state.user.name = data.username
             this.$store.state.user.email = data.email
             this.$store.state.views = data.views
+            this.$store.state.province = data.province
             window.localStorage.loginflag = true
             this.$router.push({
               path: '/data/business/main'

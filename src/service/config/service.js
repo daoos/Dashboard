@@ -30,7 +30,9 @@ let pGroup = {
           // }
         }
       },
-      'must': []
+      'must': [],
+      'minimum_should_match': 1,
+      'should': []
     }
   },
   'aggs': {
