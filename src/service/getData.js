@@ -97,6 +97,7 @@ export const loginHttp = (p) => axios.post(CONFIG.login, p)
  */
 function getGroupParams(p) {
   let timeCode = 'current_date' // 根据flag来端盘筛选时间的字段
+  let privinceCode = 'state_id_name'
   const params = deepCopy(CONFIG.P_GROUP)
   if (p.isGroup) {
     params.size = 0
@@ -111,6 +112,7 @@ function getGroupParams(p) {
   // 信使关注详情
   if (p.create_date_flag) {
     timeCode = 'create_date'
+    privinceCode = 'source_state_name'
   }
   params.sort = {
     [timeCode]: 'desc'
@@ -152,11 +154,13 @@ function getGroupParams(p) {
     }
   }
   // 限制显示城市
-  if (!params.query.bool.should.length) {
+  params.query.bool.should = []
+  if (!params.query.bool.should.length && store.state.province.length) {
+    params.query.bool.minimum_should_match = 1
     store.state.province.forEach((c) => {
       params.query.bool.should.push({
         'term': {
-          'source_state_name.keyword': c
+          [`${privinceCode}.keyword`]: c
         }
       })
     })

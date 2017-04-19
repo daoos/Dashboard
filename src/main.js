@@ -17,7 +17,6 @@ router.beforeEach(({
     auth = true
   } = meta
   let isLogin = eval(window.localStorage.loginflag) // true用户已登录， false用户未登录
-  console.log(isLogin);
   if (isLogin && path === '/login') {
     return next({
       path: 'data/business/main'

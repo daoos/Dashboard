@@ -1,7 +1,9 @@
+import store from '../../vuex'
+
 let CONFIG_LOCAL = require('./local.js').default
   // 本地测试 此句代码需删除
 let CONFIG = require('./config.js').default
-if (isLocal()) {
+if (store.state.isLocal) {
   CONFIG = CONFIG_LOCAL
 }
 let params = {
@@ -31,7 +33,7 @@ let pGroup = {
         }
       },
       'must': [],
-      'minimum_should_match': 1,
+      'minimum_should_match': 0,
       'should': []
     }
   },
