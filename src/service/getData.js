@@ -124,12 +124,14 @@ function getGroupParams(p) {
   if ((filterCode !== 'home' && p.isGroup) || timeflag) {
     // 按月查询
     if (filterCode !== 'home' && p.isGroup) {
+      let groupAggs = Object.assign({}, params.aggs)
       params.aggs = {
         [filterCode]: {
           'terms': {
             'size': 10000,
             'field': `${filterCode}.keyword`
-          }
+          },
+          'aggs': groupAggs
         }
       }
       if (timeflag) {

@@ -23,7 +23,8 @@ const state = {
     financialData: true, // 财务数据
     setting: true // 设置
   },
-  isLocal: window.location.hostname === 'localhost'
+  // isLocal: window.location.hostname === 'localhost',
+  isLocal: false
 }
 
 export default new Vuex.Store({

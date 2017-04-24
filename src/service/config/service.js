@@ -38,10 +38,39 @@ let pGroup = {
     }
   },
   'aggs': {
-    'city_id_name': {
-      'terms': {
-        'size': 10000,
-        'field': 'city_id_name.keyword'
+    'subscribe_doc_count': {
+      'sum': {
+        'field': 'doc_count'
+      }
+    },
+    'subscribe_total_count': {
+      'sum': {
+        'field': 'total_count'
+      }
+    },
+    'visit_count_sum': {
+      'sum': {
+        'field': 'visit_count_sum'
+      }
+    },
+    'read_material_sum': {
+      'sum': {
+        'field': 'read_material_sum'
+      }
+    },
+    'doctor_evaluate_sum': {
+      'sum': {
+        'field': 'doctor_evaluate_sum'
+      }
+    },
+    'sales_count_sum': {
+      'sum': {
+        'field': 'sales_count_sum'
+      }
+    },
+    'sales_amount_sum': {
+      'sum': {
+        'field': 'sales_amount_sum'
       }
     }
   }

@@ -98,22 +98,27 @@
           <el-table-column label="SKU"></el-table-column>
           <el-table-column label="省份"></el-table-column>
           <el-table-column label="城市"></el-table-column>
-          <el-table-column label="终端" min-width="140"></el-table-column>
+          <el-table-column label="终端"></el-table-column>
         </el-table-column>
         <el-table-column label="用户信息">
           <el-table-column label="负责信使"></el-table-column>
-          <el-table-column label="累计关注医生"></el-table-column>
-          <el-table-column label="关注医生"></el-table-column>
+          <el-table-column label="累计关注医生" prop="subscribe_total_count.value" min-width="140"></el-table-column>
+          <el-table-column label="关注医生" prop="subscribe_doc_count.value"></el-table-column>
         </el-table-column>
         <el-table-column label="实际拜访数据">
-          <el-table-column label="拜访次数"></el-table-column>
-          <el-table-column label="阅读次数"></el-table-column>
-          <el-table-column label="反馈次数"></el-table-column>
+          <el-table-column label="拜访次数" prop="visit_count_sum.value"></el-table-column>
+          <el-table-column label="阅读次数" prop="read_material_sum.value"></el-table-column>
+          <el-table-column label="反馈次数" prop="doctor_evaluate_sum.value"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
-          <el-table-column label="销售数量"></el-table-column>
-          <el-table-column label="销售额" inline-template>
-            <i class="el-icon-arrow-right go-detail-icon"></i>
+          <el-table-column label="销售数量" prop="sales_count_sum.value"></el-table-column>
+          <el-table-column label="销售额">
+            <template  scope="scope">
+              <div class="sale_amount">
+                <span>{{scope.row.sales_amount_sum.value}}</span>
+                <i class="el-icon-arrow-right go-detail-icon"></i>
+              </div>
+            </template>
           </el-table-column>
         </el-table-column>
       </data-tables>
@@ -205,6 +210,7 @@ export default {
     },
     // 过滤条件点击事件
     checkChange(item, flag) {
+      console.log(this.timeflag);
       // 当前
       if (this.timeflag !== 'day' && this.showGroup) {
         return
@@ -378,7 +384,7 @@ export default {
       endDate: `${date.getFullYear()}-${(date.getMonth() + 1)}-01`,
       showGroup: false,
       searchProp: '',
-      timeflag: '',
+      timeflag: 'day',
       groupData: [],
       item: {
         code: 'home'
@@ -427,5 +433,9 @@ export default {
 .page-businessMain
   position absolute
   background #f6f6f6
-
+  .sale_amount
+    .el-icon-arrow-right
+      position absolute
+      top 13px
+      right 6px
 </style>
