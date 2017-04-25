@@ -4,7 +4,7 @@
       <el-col :span="8.5">
         <h5 class="title">标题</h5>
         <el-menu default-active="/data/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
-          <el-menu-item index="/data" v-if="$store.state.views.dashboard">Dashboard</el-menu-item>
+          <el-menu-item index="/data/dailyData" v-if="$store.state.views.dashboard">Dashboard</el-menu-item>
           <el-menu-item index="/pageData" v-if="$store.state.views.pageData">页面数据</el-menu-item>
           <el-submenu index="3">
             <template slot="title">业务数据</template>

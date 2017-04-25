@@ -122,9 +122,9 @@ function getGroupParams(p) {
     'lte': p.endTime
   }
   if ((filterCode !== 'home' && p.isGroup) || timeflag) {
+    let groupAggs = Object.assign({}, params.aggs)
     // 按月查询
     if (filterCode !== 'home' && p.isGroup) {
-      let groupAggs = Object.assign({}, params.aggs)
       params.aggs = {
         [filterCode]: {
           'terms': {
@@ -150,7 +150,8 @@ function getGroupParams(p) {
           'date_histogram': {
             'field': timeCode,
             'interval': timeflag
-          }
+          },
+          'aggs': groupAggs
         }
       }
     }

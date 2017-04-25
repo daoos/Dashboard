@@ -15,6 +15,6 @@ export default (path) => {
     case undefined: // localhost
       return store.state.isLocal ? CONFIG.origin + path : http + CONFIG.origin + path
     default: // dev
-      return http + CONFIG.origin + path
+      return http + 'pro' + CONFIG.origin + path
   }
 }
