@@ -63,28 +63,28 @@ export default {
         this.$router.push({
           path: '/data/business/main'
         })
-      } else {
-        loginHttp({
-          user: {
-            name: this.formLabelAlign.username,
-            psw: this.formLabelAlign.psw
-          }
-        }).then((res) => {
-          let data = res.data
-          if (data.error) {
-            this.$message.error('用户名或密码错误')
-          } else {
-            this.$store.state.user.name = data.username
-            this.$store.state.user.email = data.email
-            this.$store.state.views = data.views
-            this.$store.state.province = data.province
-            window.localStorage.loginflag = true
-            this.$router.push({
-              path: '/data/business/main'
-            })
-          }
-        })
+        return
       }
+      loginHttp({
+        user: {
+          name: this.formLabelAlign.username,
+          psw: this.formLabelAlign.psw
+        }
+      }).then((res) => {
+        let data = res.data
+        if (data.error) {
+          this.$message.error('用户名或密码错误')
+        } else {
+          this.$store.state.user.name = data.username
+          this.$store.state.user.email = data.email
+          this.$store.state.views = data.views
+          this.$store.state.province = data.province || []
+          window.localStorage.loginflag = true
+          this.$router.push({
+            path: '/data/business/main'
+          })
+        }
+      })
     },
     showLogin() {
       this.title = '登录'

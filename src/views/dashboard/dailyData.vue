@@ -63,7 +63,6 @@ export default {
           tempArr.push(obj)
         })
         this.tableData = tempArr
-        this.store.push(this._getStoreObj())
       })
     },
     _getStartDate() {

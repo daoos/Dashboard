@@ -20,6 +20,7 @@ const state = {
     bisTerminal: true, // 区域终端购进汇总
     bisRepeat: true, // 区域重复购进汇总
     bisDetail: true, // 信使关注详情
+    bisQuesDetail: true, // 调查统计详情
     financialData: true, // 财务数据
     setting: true // 设置
   },

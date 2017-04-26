@@ -175,11 +175,13 @@ function getGroupParams(p) {
   p.filterNameArr = p.filterNameArr || []
   p.filterNameArr.forEach(r => {
     let filterCode = r.code
-    params.query.bool.must.push({
-      'term': {
-        [`${filterCode}.keyword`]: r.name
-      }
-    })
+    if (filterCode !== 'home') {
+      params.query.bool.must.push({
+        'term': {
+          [`${filterCode}.keyword`]: r.name
+        }
+      })
+    }
   })
 
   // // 分组数据
