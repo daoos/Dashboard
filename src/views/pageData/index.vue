@@ -51,7 +51,7 @@
         <el-table-column prop="hospital_assign_count" label="离开应用"></el-table-column>
         <el-table-column label="走向">
           <template  scope="scope">
-            <div class="detail">查看</div>
+            <div class="detail" @click="goDetail">查看</div>
           </template>
         </el-table-column>
       </data-tables>
@@ -59,26 +59,24 @@
       <data-tables
       v-show="showGroup"
       v-loading.body="loading&&showGroup"
-      @row-click='rowClick'
-      :border="false"
-      :stripe="false"
       :data='groupData'
+      :border="true"
+      :stripe="false"
       ref="groupTable"
       :has-action-col="false"
       :pagination-def='{pageSize:10,pageSizes:[10,20,50]}'
       :search-def='{props:searchProp}'>
-        <el-table-column label="分组" width="100">
+        <el-table-column label="转向页面" width="250" prop="name"></el-table-column>
+        <el-table-column label="比例">
           <template  scope="scope">
-<div class="group">
-  {{scope.row.key}} ({{scope.row.doc_count}})</div>
+<div class="progressBar">
+  <div class="pro-wrapper">
+    <el-progress :percentage="scope.row.num" :show-text="false" :stroke-width="16"></el-progress>
+  </div>
+  <span class="num">{{scope.row.num}}%</span>
+</div>
 </template>
         </el-table-column>
-        <el-table-column label="省份"></el-table-column>
-        <el-table-column label="城市"></el-table-column>
-        <el-table-column label="信使"></el-table-column>
-        <el-table-column label="注册手机"></el-table-column>
-        <el-table-column label="状态"></el-table-column>
-        <el-table-column label="经纪人"></el-table-column>
       </data-tables>
     </div>
   </div>
@@ -110,16 +108,15 @@ export default {
     })
   },
   methods: {
-    rowClick(row) {
-      this.showGroup = false
-      this._queryDetail()
-    },
     timeChange() {
       if (this.showGroup) {
         this._queryGroup()
       } else {
         this._queryDetail()
       }
+    },
+    goDetail() {
+      this.showGroup = true
     },
     timeFilterClick(item) {
       let flag = false
@@ -209,7 +206,13 @@ export default {
       endDate: `${date.getFullYear()}-${(date.getMonth() + 1)}-01`,
       showGroup: false,
       searchProp: '',
-      groupData: [],
+      groupData: [{
+        name: '离开应用',
+        num: 27.1
+      }, {
+        name: 'page1',
+        num: 18.8
+      }],
       item: {
         code: 'home'
       },
@@ -220,7 +223,7 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="stylus">
 @import '../../style'
 
 .data-pageData
@@ -232,4 +235,17 @@ export default {
   .detail
     cursor pointer
     color $subject-color
+  .progressBar
+    display flex
+    line-height 16px
+    .pro-wrapper
+      flex 1
+      .el-progress-bar__outer
+         background none
+         .el-progress-bar__inner
+            background-color #0F9AEE
+    .num
+      display inline-block
+      width 130px
+      text-align center
 </style>
