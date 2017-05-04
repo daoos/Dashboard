@@ -70,7 +70,7 @@
         <el-table-column label="实际拜访数据">
           <el-table-column prop="visit_count_sum" label="拜访次数"></el-table-column>
           <el-table-column prop="read_material_sum" label="阅读次数"></el-table-column>
-          <el-table-column prop="doctor_evaluate_sum" label="反馈次数"></el-table-column>
+          <el-table-column prop="doctor_evaluate_sum" label="调研次数"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
           <el-table-column prop="sales_count_sum" label="销售数量"></el-table-column>
@@ -108,7 +108,7 @@
         <el-table-column label="实际拜访数据">
           <el-table-column label="拜访次数" prop="visit_count_sum.value"></el-table-column>
           <el-table-column label="阅读次数" prop="read_material_sum.value"></el-table-column>
-          <el-table-column label="反馈次数" prop="doctor_evaluate_sum.value"></el-table-column>
+          <el-table-column label="调研次数" prop="doctor_evaluate_sum.value"></el-table-column>
         </el-table-column>
         <el-table-column label="实际销售数据">
           <el-table-column label="销售数量" prop="sales_count_sum.value"></el-table-column>

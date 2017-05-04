@@ -327,7 +327,7 @@ export default {
     },
     exportData() {
       let table = this.$refs.table
-      this.$refs.exportExcel.exportCsv(table, table.tableData, '区域终端购进汇总')
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '信使关注详情')
     }
   },
   data() {

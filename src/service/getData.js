@@ -7,6 +7,15 @@ const CONFIG = config
 
 
 /**
+ * 登录
+ * [loginHttp description]
+ * @param  {[type]} p [description]
+ * @return {[type]}   [description]
+ */
+export const loginHttp = (p) => axios.post(CONFIG.login, p)
+
+
+/**
  *  信使拜访数据汇总
  */
 export const bisMain = (p) => axios[CONFIG.method](_getUrl(CONFIG.business.main), getGroupParams(p))
@@ -80,12 +89,21 @@ export const MesAttDetailByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.at
 })))
 
 /**
- * 登录
- * [loginHttp description]
- * @param  {[type]} p [description]
- * @return {[type]}   [description]
+ *  调查问卷统计详情表
+ *  write_flag 修改timeCode字段为write_date
+ *
  */
-export const loginHttp = (p) => axios.post(CONFIG.login, p)
+export const QuesCountDetail = (p) => axios[CONFIG.method](_getUrl(CONFIG.ques_detail), getGroupParams(Object.assign(p, {
+  write_flag: true
+})))
+
+/**
+ *  调查问卷统计详情表分组查询
+ */
+export const QuesCountDetailByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG.ques_detail), getGroupParams(Object.assign(p, {
+  isGroup: true,
+  write_flag: true
+})))
 
 /**
  * [getGroupParams description]
@@ -114,6 +132,10 @@ function getGroupParams(p) {
     timeCode = 'create_date'
     privinceCode = 'source_state_name'
   }
+  // 调查问卷统计详情
+  if (p.write_flag) {
+    timeCode = 'write_date'
+  }
   params.sort = {
     [timeCode]: 'desc'
   }
@@ -123,7 +145,7 @@ function getGroupParams(p) {
   }
   if ((filterCode !== 'home' && p.isGroup) || timeflag) {
     let groupAggs = Object.assign({}, params.aggs)
-    // 按月查询
+      // 按月查询
     if (filterCode !== 'home' && p.isGroup) {
       params.aggs = {
         [filterCode]: {

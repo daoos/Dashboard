@@ -6,14 +6,26 @@
 </template>
 
 <script>
-import CsvExport from '@/utils/CsvExport'
+// import ExportJsonExcel from '@/utils/JsonExportExcel/dist/JsonExportExcel.min.js'
+import CsvExport from '@/utils/CsvExport.js'
 
 export default {
   methods: {
     exportCsv(tableEl, tableData, fileName) {
-      let columns = this.getColumns(tableEl)
+      const columns = this.getColumns(tableEl)
       const fields = columns.map(t => t.prop)
       const fieldNames = columns.map(t => t.label)
+        // const options = {
+        //   fileName: fileName,
+        //   datas: [{
+        //     sheetData: tableData,
+        //     sheetName: 'sheet',
+        //     sheetFilter: fields,
+        //     sheetHeader: fieldNames
+        //   }]
+        // }
+        // const toExcel = new ExportJsonExcel(option)
+        // toExcel.saveExcel()
       CsvExport(tableData, fields, fieldNames, fileName)
     },
     /**
@@ -34,7 +46,6 @@ export default {
     }
   }
 }
-
 </script>
 
 <style lang="stylus">

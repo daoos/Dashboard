@@ -1,6 +1,6 @@
 // 区域终端购进汇总
 <template lang="html">
-  <div class="page-businessTerminal">
+  <div class="page-quesCountDetail">
     <v-header :flag="showGroup" :options="options" :routerArr="routerArr" @breadClick="breadClick"></v-header>
     <div class="et-filters">
       <div class="conditions">
@@ -16,7 +16,7 @@
         <div class="start">
           <span class="text">起始：</span>
           <el-date-picker
-            type="month"
+            type="date"
             ref='startDate'
             v-model="startDate"
             @change='timeChange'
@@ -27,7 +27,7 @@
         <div class="end">
           <span class="text">截止：</span>
           <el-date-picker
-            type="month"
+            type="date"
             ref='endDate'
             v-model="endDate"
             @change='timeChange'
@@ -53,13 +53,15 @@
       :pagination-def='{pageSize:20,pageSizes:[20,50,100]}'>
         <el-table-column prop="state_id_name" label="省份"></el-table-column>
         <el-table-column prop="city_id_name" label="城市"></el-table-column>
-        <el-table-column prop="product" label="SKU"></el-table-column>
-        <el-table-column prop="hospital_available_count" label="购进信使负责终端数"></el-table-column>
-        <el-table-column prop="hospital_assign_count" label="购进信使可负责终端数"></el-table-column>
-        <el-table-column prop="hospital_count" label="购进终端数"></el-table-column>
-        <el-table-column prop="hospital_count" label="购进终端数"></el-table-column>
-        <el-table-column prop="hospital_count" label="购进终端数"></el-table-column>
-        <el-table-column prop="hospital_count" label="购进终端数"></el-table-column>
+        <el-table-column prop="class_id_name" label="医院级别"></el-table-column>
+        <el-table-column prop="department_line_id_name" label="科室"></el-table-column>
+        <el-table-column prop="title_id_name" label="医生职称"></el-table-column>
+        <el-table-column prop="doctor_id_name" label="医生姓名"></el-table-column>
+        <el-table-column prop="write_date" label="调研时间"></el-table-column>
+        <el-table-column prop="product_id_name" label="SKU"></el-table-column>
+        <el-table-column prop="questionnaire_id_name" label="问卷名称"></el-table-column>
+        <el-table-column prop="question_id_name" label="题目"></el-table-column>
+        <el-table-column prop="option_ids_name" label="选项"></el-table-column>
       </data-tables>
 
       <data-tables
@@ -78,12 +80,17 @@
             <div class="group">{{scope.row.key}} ({{scope.row.doc_count}})</div>
           </template>
         </el-table-column>
-        <el-table-column label="SKU"></el-table-column>
         <el-table-column label="省份"></el-table-column>
         <el-table-column label="城市"></el-table-column>
-        <el-table-column label="购进信使负责终端数"></el-table-column>
-        <el-table-column label="购进信使可负责终端数"></el-table-column>
-        <el-table-column label="购进终端数"></el-table-column>
+        <el-table-column label="医院级别"></el-table-column>
+        <el-table-column label="科室"></el-table-column>
+        <el-table-column label="医生职称"></el-table-column>
+        <el-table-column label="医生姓名"></el-table-column>
+        <el-table-column label="调研时间"></el-table-column>
+        <el-table-column label="SKU"></el-table-column>
+        <el-table-column label="问卷名称"></el-table-column>
+        <el-table-column label="题目"></el-table-column>
+        <el-table-column label="选项"></el-table-column>
       </data-tables>
     </div>
   </div>
@@ -94,8 +101,8 @@ import header from 'components/header/header'
 import exportExcel from 'components/export/export'
 import BiCheckboxGroup from 'components/checkbox-group'
 import {
-  bisTerminal,
-  bisTerByGroup
+  QuesCountDetail,
+  QuesCountDetailByGroup
 } from 'service/getData'
 
 const date = new Date()
@@ -235,7 +242,7 @@ export default {
       this.showGroup = true
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
-      bisTerByGroup({
+      QuesCountDetailByGroup({
         item: this.item,
         startTime: startTime,
         endTime: endTime,
@@ -250,7 +257,7 @@ export default {
       this.showGroup = false
       let startTime = this.$refs.startDate.displayValue
       let endTime = this.$refs.endDate.displayValue
-      bisTerminal({
+      QuesCountDetail({
         item: this.item,
         startTime: startTime,
         endTime: endTime,
@@ -259,11 +266,13 @@ export default {
         this.loading = false
         let arr = res.data.hits.hits
         let tempArr = []
-        let props = ['sales_month', 'product', 'state_id_name', 'city_id_name', 'hospital_available_count', 'hospital_assign_count', 'hospital_count']
+        let props = ['state_id_name', 'city_id_name', 'class_id_name', 'product_id_name', 'department_line_id_name', 'title_id_name', 'doctor_id_name', 'write_date', 'hospital_count', 'questionnaire_id_name', 'question_id_name',
+          'option_ids_name'
+        ]
         arr.forEach((t) => {
           let obj = {}
           props.forEach(k => {
-            obj[k] = t._source[k]
+            obj[k] = k === 'write_date' ? t._source[k].split(' ')[0] : t._source[k]
           })
           tempArr.push(obj)
         })
@@ -306,7 +315,7 @@ export default {
     },
     exportData() {
       let table = this.$refs.table
-      this.$refs.exportExcel.exportCsv(table, table.tableData, '区域终端购进汇总')
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '调查问卷统计详情')
     }
   },
   data() {
@@ -337,19 +346,19 @@ export default {
         code: 'city_id_name'
       }, {
         name: 'SKU',
-        code: 'product'
+        code: 'product_id_name'
       }, {
         name: '科室',
-        code: 'product'
+        code: 'department_line_id_name'
       }, {
         name: '问卷名称',
-        code: 'product'
+        code: 'questionnaire_id_name'
       }, {
         name: '题目',
-        code: 'product'
+        code: 'question_id_name'
       }, {
         name: '选项',
-        code: 'product'
+        code: 'option_ids_name'
       }]
     }
   }
@@ -358,6 +367,6 @@ export default {
 
 <style lang="stylus" scoped>
 
-.page-businessTerminal
+.page-quesCountDetail
   background #f6f6f6
 </style>

@@ -16,7 +16,7 @@
             placeholder="选择日期">
           </el-date-picker>
         </div>
-        <div class="end">
+         <div class="end">
           <span class="text">截止：</span>
           <el-date-picker
             type="month"
@@ -195,7 +195,7 @@ export default {
     },
     exportData() {
       let table = this.$refs.table
-      this.$refs.exportExcel.exportCsv(table, table.tableData, '区域终端购进汇总')
+      this.$refs.exportExcel.exportCsv(table, table.tableData, '页面数据统计')
     }
   },
   data() {
