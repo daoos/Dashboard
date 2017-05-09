@@ -8,7 +8,6 @@
         <div class="bi-checkbox-wrapper">
           <bi-checkbox-group :items="checkArr" @check-change="checkChange"></bi-checkbox-group>
         </div>
-        <span class="info">(医院、基层医疗机构、药店)</span>
       </div>
       <div class="dot-line"></div>
       <div class="times">
@@ -59,8 +58,8 @@
         <el-table-column prop="doctor_id_name" label="医生姓名"></el-table-column>
         <el-table-column prop="write_date" label="调研时间"></el-table-column>
         <el-table-column prop="product_id_name" label="SKU"></el-table-column>
-        <el-table-column prop="questionnaire_id_name" label="问卷名称"></el-table-column>
-        <el-table-column prop="question_id_name" label="题目"></el-table-column>
+        <el-table-column prop="questionnaire_id_name" label="问卷名称" min-width="120"></el-table-column>
+        <el-table-column prop="question_id_name" label="题目" min-width="140"></el-table-column>
         <el-table-column prop="option_ids_name" label="选项"></el-table-column>
       </data-tables>
 
@@ -88,9 +87,15 @@
         <el-table-column label="医生姓名"></el-table-column>
         <el-table-column label="调研时间"></el-table-column>
         <el-table-column label="SKU"></el-table-column>
-        <el-table-column label="问卷名称"></el-table-column>
-        <el-table-column label="题目"></el-table-column>
-        <el-table-column label="选项"></el-table-column>
+        <el-table-column label="问卷名称" min-width="120"></el-table-column>
+        <el-table-column label="题目" min-width="140"></el-table-column>
+        <el-table-column label="选项">
+          <template  scope="scope">
+            <div class="sale_amount">
+              <i class="el-icon-arrow-right go-detail-icon"></i>
+            </div>
+          </template>
+        </el-table-column>
       </data-tables>
     </div>
   </div>
@@ -272,7 +277,7 @@ export default {
         arr.forEach((t) => {
           let obj = {}
           props.forEach(k => {
-            obj[k] = k === 'write_date' ? t._source[k].split(' ')[0] : t._source[k]
+            obj[k] = k === 'write_date' ? t._source[k].split(' ')[0] : (t._source[k] || '-')
           })
           tempArr.push(obj)
         })

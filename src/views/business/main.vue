@@ -114,11 +114,11 @@
           <el-table-column label="销售数量" prop="sales_count_sum.value"></el-table-column>
           <el-table-column label="销售额">
             <template  scope="scope">
-<div class="sale_amount">
-  <span>{{scope.row.sales_amount_sum.value}}</span>
-  <i class="el-icon-arrow-right go-detail-icon"></i>
-</div>
-</template>
+              <div class="sale_amount">
+                <span>{{scope.row.sales_amount_sum.value}}</span>
+                <i class="el-icon-arrow-right go-detail-icon"></i>
+              </div>
+            </template>
           </el-table-column>
         </el-table-column>
       </data-tables>

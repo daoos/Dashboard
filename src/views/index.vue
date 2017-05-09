@@ -12,7 +12,7 @@
             <el-menu-item index="/data/business/terminal" v-if="$store.state.views.bisTerminal">区域终端购进汇总</el-menu-item>
             <el-menu-item index="/data/business/repeat" v-if="$store.state.views.bisRepeat">区域重复购进汇总</el-menu-item>
             <el-menu-item index="/data/business/detail" v-if="$store.state.views.bisDetail">信使关注详情</el-menu-item>
-            <el-menu-item index="/data/business/quesDetail" v-if="$store.state.views.bisQuesDetail">调查问卷统计详情</el-menu-item>
+            <el-menu-item index="/data/business/quesDetail" v-if="$store.state.views.bisQuesDetail">调研问卷统计详情</el-menu-item>
           </el-submenu>
           </el-submenu>
           <el-menu-item index="4" v-if="$store.state.views.financialData">财务数据</el-menu-item>

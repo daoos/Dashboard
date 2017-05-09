@@ -190,7 +190,7 @@ export default {
       this.showGroup = false
     },
     _setCheckArr() {
-      let arr = this.options.slice()
+      let arr = this.options.slice().filter(r => r.code !== 'source_name')
       arr.forEach(i => {
         i.checked = false
         i.disabled = false
@@ -283,7 +283,7 @@ export default {
             if (k === 'create_date') {
               obj[k] = t._source[k].split(' ')[0]
             } else {
-              obj[k] = t._source[k]
+              obj[k] = t._source[k] || '-'
             }
           })
           tempArr.push(obj)
