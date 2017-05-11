@@ -106,6 +106,11 @@ export const QuesCountDetailByGroup = (p) => axios[CONFIG.method](_getUrl(CONFIG
 })))
 
 /**
+ *  DashBoard环比
+ */
+export const getDbRing = () => axios[CONFIG.method](CONFIG.dashboard.ring, {})
+
+/**
  * [getGroupParams description]
  * @param  {[type]} filterCode [description]
  * @param  {[type]} startTime  [description]

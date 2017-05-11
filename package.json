@@ -13,8 +13,11 @@
   },
   "dependencies": {
     "axios": "^0.15.3",
+    "echarts": "^3.5.4",
     "element-ui": "^1.2.3",
+    "font-awesome": "^4.7.0",
     "json2csv": "^3.7.3",
+    "mockjs": "^1.0.1-beta3",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.5.0",
     "vue": "^2.2.1",

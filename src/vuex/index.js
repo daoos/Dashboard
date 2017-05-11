@@ -12,6 +12,7 @@ const state = {
   }],
   loginflag: true,
   user: {},
+  colorArr: ['#7ED321', '#0F9AEE', '#7E5E2A', '#F6A623'],
   province: [], // 限制用户查看的省份
   views: {
     dashboard: true, // DashBoard

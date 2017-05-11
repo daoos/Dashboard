@@ -1,10 +1,10 @@
 <template lang="html">
-  <div class="bi-business">
+  <div class="bi-page">
     <div class="side-menu">
       <el-col :span="8.5">
         <h5 class="title">医时</h5>
         <el-menu default-active="/data/business/main" class="el-menu-vertical-demo" theme="dark" :router="true">
-          <el-menu-item index="/data/dailyData" v-if="$store.state.views.dashboard">Dashboard</el-menu-item>
+          <el-menu-item index="/data/dashboard" v-if="$store.state.views.dashboard">Dashboard</el-menu-item>
           <el-menu-item index="/data/pageData" v-if="$store.state.views.pageData">页面数据</el-menu-item>
           <el-submenu index="3">
             <template slot="title">业务数据</template>
@@ -35,7 +35,7 @@ $border-color = rgba(255,255,255,0.1)
 $bg-color = #332E2E
 $side-menu-width = 200px
 $content-width = calc(100% - 200px)
-.bi-business
+.bi-page
   .side-menu
     .title
       font-size 26px
